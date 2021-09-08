@@ -1,0 +1,178 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('./assets/fonts/Roboto-Regular.ttf');
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('./assets/fonts/Roboto-Italic.ttf');
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('./assets/fonts/Roboto-Thin.ttf');
+    font-weight: 300;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('./assets/fonts/Roboto-Bold.ttf');
+    font-weight: 700;
+}
+@font-face {
+    font-family: 'Bazar';
+    src: url('./assets/fonts/Bazar.ttf');
+}
+@font-face {
+    font-family: 'Zig';
+    src: url('./assets/fonts/zig.ttf');
+}
+@font-face {
+    font-family: 'DeterminationMonoWebRegular';
+    src: url('./assets/fonts/DeterminationMonoWebRegular.ttf');
+}
+@font-face {
+    font-family: 'DeterminationSansWebRegular';
+    src: url('./assets/fonts/DeterminationSansWebRegular.ttf');
+}
+@font-face {
+    font-family: 'AmericanCaptain';
+    src: url('./assets/fonts/AmericanCaptain.ttf');
+}
+@font-face {
+    font-family: 'Franchise';
+    src: url('./assets/fonts/Franchise.ttf');
+}
+@font-face {
+    font-family: 'MarketDeco';
+    src: url('./assets/fonts/MarketDeco.ttf');
+}
+@font-face {
+    font-family: 'WRESTLEMANIA';
+    src: url('./assets/fonts/WRESTLEMANIA.ttf');
+}
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.background {
+    min-height: 100vh;
+    background-color: rgb(230, 230, 230);
+    padding-bottom: 2rem;
+    background-image: url('./assets/images/bg.jpg');
+    box-shadow: 0.5rem 0 0.75rem black;
+    min-height: 100vh;
+    padding-bottom: 2rem;
+}
+.layout {
+    // background-size: cover;
+}
+
+.custom-font {
+    &.Bazar {
+        font-family: 'Bazar';
+    }
+    &.Zag {
+        font-family: 'Zag';
+    }
+    &.DeterminationMWR {
+        font-family: 'DeterminationMonoWebRegular';
+    }
+    &.DeterminationSWR {
+        font-family: 'DeterminationSansWebRegular';
+    }
+    &.AmericanCaptain {
+        font-family: 'AmericanCaptain';
+    }
+    &.Franchise {
+        font-family: 'Franchise';
+    }
+    &.MarketDeco {
+        font-family: 'MarketDeco';
+    }
+    &.WRESTLEMANIA {
+        font-family: 'WRESTLEMANIA';
+    }
+}
+
+.embla {
+    overflow: hidden;
+}
+.embla__container {
+    display: flex;
+}
+.embla__slide {
+    position: relative;
+    flex: 0 0 100%;
+}
+
+.frame {
+    background-image: url('./assets/images/frame.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    position: relative;
+    .frame-inner {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+}
+
+.img-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+
+.signin-address {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+
+    border: 1px solid white;
+    border-radius: 2px;
+    background-color: transparent;
+    p {
+        font-weight: 700;
+        font-size: 1rem;
+        margin: 0;
+        padding: 0.5rem;
+        color: white;
+        text-shadow: 1px 2px 3px black;
+    }
+    span {
+        display: inline-flex;
+        align-items: center;
+        background-color: white;
+        padding: 0 0.375em;
+        color: lightsalmon;
+    }
+}
