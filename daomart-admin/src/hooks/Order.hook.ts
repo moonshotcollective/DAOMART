@@ -1,7 +1,11 @@
 import React from 'react';
 import {GetOrders, GetOrderById} from '../network/api';
 
-const useGetOrders = (token: string, data?: any): [Order[], boolean, any] => {
+const useGetOrders = (
+    token: string,
+    data?: any,
+    trigger = false
+): [Order[], boolean, any] => {
     const [orders, setorders] = React.useState<Order[]>([]);
     const [loading, setloading] = React.useState<boolean>(false);
     const [err, seterr] = React.useState<any>('');
@@ -29,12 +33,13 @@ const useGetOrders = (token: string, data?: any): [Order[], boolean, any] => {
                 seterr(err);
                 setorders([]);
             });
-    }, [token]);
+    }, [token, data, trigger]);
     return [orders, loading, err];
 };
 const useGetOrderById = (
     token: string,
-    oid?: string
+    oid?: string,
+    trigger = false
 ): [Order | null, boolean, any] => {
     const [order, setorder] = React.useState<Order | null>(null);
     const [loading, setloading] = React.useState<boolean>(false);
@@ -63,7 +68,7 @@ const useGetOrderById = (
                 seterr(err);
                 setorder(null);
             });
-    }, [token]);
+    }, [token, trigger]);
     return [order, loading, err];
 };
 

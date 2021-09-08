@@ -21,11 +21,13 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import {UpdateOrderStatus} from '../../network/api';
 function OrderPanelPage() {
     const {state} = React.useContext(GitcoinContext);
+    const [trigger, setTrigger] = React.useState(false);
 
     const {oid} = useParams();
-    const [order] = useGetOrderById(state.token, oid);
+    const [order] = useGetOrderById(state.token, oid, trigger);
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -44,7 +46,13 @@ function OrderPanelPage() {
                     <Tab label="Activity" {...a11yProps(1)} />
                 </Tabs>
             </AppBar>
-            <OrderTabContent value={value} index={0} order={order} />
+            <OrderTabContent
+                value={value}
+                index={0}
+                order={order}
+                token={state.token}
+                onTrigger={() => setTrigger(!trigger)}
+            />
             <ActivityTabContent value={value} index={1} order={order} />
         </Container>
     );
@@ -56,12 +64,32 @@ const OrderTabContent = ({
     value,
     index,
     order,
+    token,
+    onTrigger,
 }: {
     value: number;
     index: number;
     order: Order | null;
+    token: string | null;
+    onTrigger: any;
 }) => {
-    const onStatusChange = (status) => {};
+    const onStatusChange = (status) => {
+        try {
+            if (!token || !order) {
+                return;
+            }
+            UpdateOrderStatus(token, order.order_id, status)
+                .then((result) => {
+                    onTrigger();
+                    console.log('result', result);
+                })
+                .catch((err) => {
+                    console.log('err', err);
+                });
+        } catch (err) {
+            console.log('err', err);
+        }
+    };
     return (
         <TabPanel value={value} index={index}>
             <div style={{minHeight: 480}}>
@@ -207,5 +235,7 @@ const TabPanel = (props: TabPanelProps) => {
 };
 
 const MyChip = ({label}: {label: string | undefined}) => {
-    return label ? <Chip label={label} style={{marginRight: 8}} /> : null;
+    return label ? (
+        <Chip label={label} style={{marginRight: 8}} color="secondary" />
+    ) : null;
 };

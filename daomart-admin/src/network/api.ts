@@ -143,3 +143,13 @@ export const GetOrderById = (token: string, data?: any) =>
             'Content-Type': 'application/json',
         },
     });
+export const UpdateOrderStatus = (token: string, oid: string, status: string) =>
+    axios({
+        method: 'POST',
+        url: GetUrl('order/update'),
+        data: {oid: oid, status: status},
+        headers: {
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+        },
+    });

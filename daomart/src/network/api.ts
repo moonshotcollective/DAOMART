@@ -49,3 +49,13 @@ export const MakeOrder = (token?: string, data?: any) =>
             'Content-Type': 'application/json',
         },
     });
+export const UpdateOrderStatus = (token?: string, data?: any) =>
+    axios({
+        method: 'POST',
+        url: GetUrl('order/update-status'),
+        data: data,
+        headers: {
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+        },
+    });

@@ -32,7 +32,7 @@ import {ethers} from 'ethers';
 import {useGetCandyAllowance} from '../../hooks/Candy.hook';
 import {ACTIONS} from '../../store/actions';
 import {useGetBlockNumber} from '../../hooks/Balance';
-import {MakeOrder} from '../../network/api';
+import {MakeOrder, UpdateOrderStatus} from '../../network/api';
 declare const window: any;
 
 const DEFAUL_PHOTO =
@@ -41,6 +41,7 @@ const DEFAUL_PHOTO =
 const ProductPage = () => {
     const {state, dispatch} = React.useContext(GitcoinContext);
     const [amountBitByBit, setamountBitByBit] = React.useState(0);
+
     const [amountBitByBitLoading, setamountBitByBitLoading] =
         React.useState(false);
     const [buyEtherLoading, setBuyEtherLoading] = React.useState(false);
@@ -129,7 +130,7 @@ const ProductPage = () => {
 
     const buyWithEther = async () => {
         try {
-            await onNewOrder('Full');
+            const order = await onNewOrder('Full');
             dispatch({type: ACTIONS.AUTHCHECK});
             setBuyEtherLoading(true);
             contract.methods
@@ -139,6 +140,7 @@ const ProductPage = () => {
                     from: state.wallets[0],
                 })
                 .then((res) => {
+                    onUpdateOrderStatus(order?.order_id, 'paid');
                     setBuyEtherLoading(false);
                 })
                 .catch((err) => {
@@ -152,7 +154,7 @@ const ProductPage = () => {
     };
     const buyWithCandy = async () => {
         try {
-            await onNewOrder('Full');
+            const order = await onNewOrder('Full');
             dispatch({type: ACTIONS.AUTHCHECK});
             if (candyAllowanceLoading || candyAllowance == null) {
                 return;
@@ -177,6 +179,7 @@ const ProductPage = () => {
                     from: state.wallets[0],
                 })
                 .then((res) => {
+                    onUpdateOrderStatus(order?.order_id, 'paid');
                     dispatch({type: ACTIONS.TRIGGER_CANDY_BALANCE});
                     setBuyCandyLoading(false);
                 })
@@ -223,7 +226,6 @@ const ProductPage = () => {
                         from: state.wallets[0],
                     })
                     .then((res) => {
-                        console.log('res123', res);
                         dispatch({type: ACTIONS.TRIGGER_CANDY_BALANCE});
                         setamountBitByBitLoading(false);
                     })
@@ -232,14 +234,13 @@ const ProductPage = () => {
                         console.log('err', err);
                     });
             } else {
-                await onNewOrder('BitByBit');
+                const order = await onNewOrder('BitByBit');
                 contract.methods
                     .buyBitByBit(pId, price)
                     .send({
                         from: state.wallets[0],
                     })
                     .then((res) => {
-                        console.log('res', res);
                         dispatch({type: ACTIONS.TRIGGER_CANDY_BALANCE});
                         setamountBitByBitLoading(false);
                     })
@@ -254,13 +255,33 @@ const ProductPage = () => {
         }
     };
 
-    const onNewOrder = (type: string = 'Full') => {
-        if (!product) {
+    const onNewOrder = (type: string = 'Full'): Promise<any> => {
+        return new Promise((resolve, reject) => {
+            if (!product) {
+                return;
+            }
+            MakeOrder(state.token, {item: product.product_id, type: type})
+                .then((result) => {
+                    if (result.data && result.data.success) {
+                        resolve(result.data.data);
+                    } else {
+                        resolve(null);
+                    }
+                })
+                .catch((err) => {
+                    resolve(null);
+                    console.log('err', err);
+                });
+        });
+    };
+    const onUpdateOrderStatus = (order_id?: string, status?: string) => {
+        if (!order_id) {
             return;
         }
-        MakeOrder(state.token, {item: product.product_id, type: type})
+
+        UpdateOrderStatus(state.token, {oid: order_id, status: status})
             .then((result) => {
-                console.log('result', result);
+                console.log('updated order', result.data.data);
             })
             .catch((err) => {
                 console.log('err', err);

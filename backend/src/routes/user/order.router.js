@@ -23,5 +23,23 @@ router.post(
             });
     }
 );
+router.post(
+    '/update-status',
+    passport.authenticate('jwt.user', {session: false}),
+    (req, res, next) => {
+        const body = req.body || {};
+        console.log('body update', body);
+        OrderController.updateStatusByUser(req.user.user_id, {
+            oid: body.oid,
+            status: body.status,
+        })
+            .then((result) => {
+                HttpModule.sendResponse(req, res, result);
+            })
+            .catch((err) => {
+                HttpModule.sendError(req, res, err);
+            });
+    }
+);
 
 module.exports = router;
