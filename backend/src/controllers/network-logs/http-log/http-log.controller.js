@@ -7,7 +7,7 @@ const __make__ = (type, method, route, ip, data, user) => {
             method: method,
             route: route,
             ip: ip,
-            geolocation: geoip.lookup(ip),
+            geolocation: JSON.stringify(geoip.lookup(ip)),
             data: JSON.stringify(data || {}).substring(0, 1e4),
             user: user ? user.user_id : null,
         });
