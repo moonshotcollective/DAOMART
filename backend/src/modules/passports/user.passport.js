@@ -1,5 +1,5 @@
 const {Strategy, ExtractJwt} = require('passport-jwt');
-const {USER_SECRET} = require('../../../Config');
+const {USER_SECRET} = require('../../../config');
 const UserController = require('../../controllers/user/user.controller');
 const HttpLogController = require('../../controllers/network-logs/http-log/http-log.controller');
 const UserJWTPassport = (passport) => {
