@@ -1,0 +1,23 @@
+{
+    "name": "daomart",
+    "version": "1.0.0",
+    "description": "Repo for all the Daomart projects",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/moonshotcollective/DAOMART.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/moonshotcollective/DAOMART/issues"
+    },
+    "homepage": "https://github.com/moonshotcollective/DAOMART#readme",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.17.1"
+    }
+}
