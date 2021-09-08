@@ -1,0 +1,25 @@
+{
+    "name": "daomart-backend",
+    "version": "0.0.1",
+    "description": "daomart backend",
+    "main": "app.js",
+    "scripts": {
+        "dev": "nodemon app.js --inspect",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Farhad Khademi",
+    "license": "MIT",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "ethereumjs-util": "^7.1.0",
+        "ethers": "^5.4.6",
+        "express": "^4.17.1",
+        "geoip-lite": "^1.4.2",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^6.0.1",
+        "passport": "^0.4.1",
+        "passport-jwt": "^4.0.0",
+        "socket.io": "^4.1.3",
+        "uuid": "^8.3.2"
+    }
+}
