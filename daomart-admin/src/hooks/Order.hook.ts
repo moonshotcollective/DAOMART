@@ -1,7 +1,7 @@
 import React from 'react';
 import {GetOrders, GetOrderById} from '../network/api';
 
-const useGetOrders = (token: string): [Order[], boolean, any] => {
+const useGetOrders = (token: string, data?: any): [Order[], boolean, any] => {
     const [orders, setorders] = React.useState<Order[]>([]);
     const [loading, setloading] = React.useState<boolean>(false);
     const [err, seterr] = React.useState<any>('');
@@ -12,7 +12,7 @@ const useGetOrders = (token: string): [Order[], boolean, any] => {
         setloading(false);
         seterr(null);
         setorders([]);
-        GetOrders(token)
+        GetOrders(token, data)
             .then((result) => {
                 if (result.data.success) {
                     setorders(result.data.data);

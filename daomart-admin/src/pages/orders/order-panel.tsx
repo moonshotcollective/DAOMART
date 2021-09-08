@@ -17,7 +17,10 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 function OrderPanelPage() {
     const {state} = React.useContext(GitcoinContext);
 
@@ -30,7 +33,7 @@ function OrderPanelPage() {
     };
     return (
         <Container maxWidth="lg" style={{marginTop: '5rem'}}>
-            <Title>User Panel</Title>
+            <Title>Order Panel</Title>
             <AppBar position="static">
                 <Tabs
                     value={value}
@@ -58,6 +61,7 @@ const OrderTabContent = ({
     index: number;
     order: Order | null;
 }) => {
+    const onStatusChange = (status) => {};
     return (
         <TabPanel value={value} index={index}>
             <div style={{minHeight: 480}}>
@@ -86,6 +90,43 @@ const OrderTabContent = ({
                         <MyChip label={order?.type} />
                     </div>
                 </div>
+                <div style={{padding: 8}}>
+                    <form
+                        noValidate
+                        autoComplete="off"
+                        style={{width: '100%', margin: '1rem 0'}}
+                    >
+                        <FormControl
+                            variant="outlined"
+                            style={{width: '100%', margin: '1rem 0'}}
+                        >
+                            <InputLabel id="demo-simple-select-outlined-label">
+                                Status
+                            </InputLabel>
+                            <Select
+                                labelId="demo-simple-select-outlined-label"
+                                id="demo-simple-select-outlined"
+                                required
+                                label="Type"
+                                placeholder="Select type"
+                                variant="outlined"
+                                value={order?.status || 'pending'}
+                                onChange={(e) => onStatusChange(e.target.value)}
+                            >
+                                <MenuItem value="">
+                                    <em>Pending is default</em>
+                                </MenuItem>
+                                {['pending', 'cancelled', 'paid'].map(
+                                    (c, i) => (
+                                        <MenuItem value={c} key={i}>
+                                            {c}
+                                        </MenuItem>
+                                    )
+                                )}
+                            </Select>
+                        </FormControl>
+                    </form>
+                </div>{' '}
             </div>
         </TabPanel>
     );

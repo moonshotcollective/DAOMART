@@ -12,7 +12,7 @@ import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 import Title from '../../components/Title.component';
 import {Button, Paper, Divider} from '@material-ui/core';
-import {useParams} from 'react-router-dom';
+import {useParams, useHistory} from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -22,6 +22,7 @@ import TableRow from '@material-ui/core/TableRow';
 
 import {NetworkLogComponent} from '../../components/NetworkLog.component';
 import {useGetHttpLogs} from '../../hooks/Log.hook';
+import {useGetOrders} from '../../hooks/Order.hook';
 function UserContent() {
     const {state} = React.useContext(GitcoinContext);
 
@@ -52,7 +53,12 @@ function UserContent() {
             <UserTabContent value={value} index={0} user={user} />
             <ActivityTabContent value={value} index={1} user={user} />
             <ActiveOrderTabContent value={value} index={2} user={user} />
-            <OrderTabContent value={value} index={3} user={user} />
+            <OrderTabContent
+                value={value}
+                index={3}
+                user={user}
+                token={state.token}
+            />
             <LogTabContent
                 value={value}
                 index={4}
@@ -195,38 +201,44 @@ const ActiveOrderTabContent = ({value, index, user}) => {
         </TabPanel>
     );
 };
-const OrderTabContent = ({value, index, user}) => {
-    const activeOrders = [];
+const OrderTabContent = ({value, index, user, token}) => {
+    const [activeOrders] = useGetOrders(token, {user: user?.user_id});
+    console.log('activeOrders', activeOrders);
+    const els = activeOrders.map((c, i) => (
+        <OrderCard key={c.order_id} order={c} />
+    ));
     return (
         <TabPanel value={value} index={index}>
             <div style={{minHeight: 480}}>
                 <Table aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Order NO#</TableCell>
-                            <TableCell>Product</TableCell>
-                            <TableCell>Price</TableCell>
-                            <TableCell>STATUS</TableCell>
+                            <TableCell>Type</TableCell>
+                            <TableCell>Item Name</TableCell>
+                            <TableCell>User Name</TableCell>
+                            <TableCell>Status</TableCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody>
-                        {activeOrders.map((account, i) => (
-                            <TableRow key={i}>
-                                <TableCell>
-                                    <Typography
-                                        variant="overline"
-                                        component={'h3'}
-                                    >
-                                        TODO
-                                    </Typography>
-                                </TableCell>
-                                <TableCell></TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
+                    <TableBody>{els}</TableBody>
                 </Table>
             </div>
         </TabPanel>
+    );
+};
+
+const OrderCard = ({order}) => {
+    const router = useHistory();
+
+    const navigate = () => {
+        router.push(`/orders/${order.order_id}`);
+    };
+    return (
+        <TableRow style={{cursor: 'pointer'}} onClick={navigate}>
+            <TableCell scope="row">{order?.type}</TableCell>
+            <TableCell scope="row">{order?.item?.name}</TableCell>
+            <TableCell>{order?.user?.name}</TableCell>
+            <TableCell>{order?.status}</TableCell>
+        </TableRow>
     );
 };
 
