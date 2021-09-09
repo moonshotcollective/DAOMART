@@ -84,6 +84,16 @@ export const GetHttpLogs = (
             'Content-Type': 'application/json',
         },
     });
+export const GetUniqueLogsByIp = (token: string) =>
+    axios({
+        method: 'POST',
+        url: GetUrl('logs/unique-ip'),
+
+        headers: {
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+        },
+    });
 
 export const MakeNewProduct = (token: string, data: Product) =>
     axios({
@@ -104,15 +114,20 @@ export const GetProducts = (token: string) =>
             'Content-Type': 'application/json',
         },
     });
-export const GetProductCategories = (token: string) =>
+export const GetProductCategories = (
+    token: string,
+    data?: CategorySearchParams
+) =>
     axios({
-        method: 'GET',
+        method: 'POST',
         url: GetUrl('category'),
+        data: data,
         headers: {
             Authorization: 'Bearer ' + token,
             'Content-Type': 'application/json',
         },
     });
+
 export const MakeNewOrder = (token: string, data?: any) =>
     axios({
         method: 'POST',
@@ -148,6 +163,17 @@ export const UpdateOrderStatus = (token: string, oid: string, status: string) =>
         method: 'POST',
         url: GetUrl('order/update'),
         data: {oid: oid, status: status},
+        headers: {
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+        },
+    });
+
+export const GetLobby = (token: string) =>
+    axios({
+        method: 'POST',
+        url: GetUrl('user/lobby'),
+        data: JSON.stringify({}),
         headers: {
             Authorization: 'Bearer ' + token,
             'Content-Type': 'application/json',

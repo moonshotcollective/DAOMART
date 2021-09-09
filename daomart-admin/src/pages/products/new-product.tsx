@@ -16,7 +16,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import {MakeNewProduct} from '../../network/api';
 import {constTags} from '../../util/tags';
-import {useGetProductCategories} from '../../hooks/Shop.hooks';
+import {useGetProductCategories} from '../../hooks/Product.hooks';
 import {useGetProductContracts} from '../../hooks/Contract.hook';
 import {useGetProductContractItems} from '../../hooks/ProductContract.hook';
 import {GitcoinContext} from '../../store';

@@ -88,6 +88,15 @@ const IsSignedUp = ({address}) => {
             .catch(reject);
     });
 };
+const getUserById = ({user_id}) => {
+    return __getUserById__(user_id);
+};
+
+const getUsersById = (list = []) => {
+    const l = [...new Set(list.map((i) => i.user_id.toString()))];
+    return Promise.all(l.map((u) => __getUserById__(u)));
+};
+
 module.exports = {
     getNonceForAddress,
     Authenticate,
@@ -95,6 +104,8 @@ module.exports = {
     getById,
     __getUserByAccountId__,
     IsSignedUp,
+    getUserById,
+    getUsersById,
 };
 const __findUserByQuery__ = ({account}) => {
     return new Promise((resolve, reject) => {
@@ -244,6 +255,21 @@ const __getUser__ = (account_id, address, name) => {
                             resolve(doc);
                         }
                     });
+                } else {
+                    resolve(userDoc);
+                }
+            })
+            .catch(reject);
+    });
+};
+
+const __getUserById__ = (id) => {
+    if (!id) return reject('NOT_FOUND');
+    return new Promise((resolve, reject) => {
+        User.findById(id)
+            .then((userDoc) => {
+                if (!userDoc) {
+                    reject('NOT_FOUND');
                 } else {
                     resolve(userDoc);
                 }

@@ -8,9 +8,11 @@ import {DrawerComponent} from '../components/Drawer.component';
 import {StatusBarComponent} from '../components/StatusBar.component';
 import {GitcoinContext} from '../store';
 import RouterWrapper from './router';
+import {useGetSocket} from '../network/socket';
 
 const Pages = () => {
     const {state} = React.useContext(GitcoinContext);
+    const socket = useGetSocket(state.token);
 
     if (!state.token) {
         return (

@@ -4,13 +4,11 @@ const {ProductCategoryController} = require('../../controllers');
 const {HttpModule} = require('../../modules');
 const router = express.Router();
 
-router.get(
+router.post(
     '/',
     passport.authenticate('jwt.admin', {session: false}),
     (req, res, next) => {
-        const body = req.params || {};
-        console.log('body', body);
-
+        const body = req.body || {};
         ProductCategoryController.getCategories(body)
             .then((result) => {
                 HttpModule.sendResponse(req, res, result);

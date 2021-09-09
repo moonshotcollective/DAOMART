@@ -61,3 +61,10 @@ type Order = {
     order_id: string;
     description?: string;
 };
+
+interface HttpLogSearchParams {
+    user?: string;
+}
+interface CategorySearchParams {
+    keyword?: string;
+}

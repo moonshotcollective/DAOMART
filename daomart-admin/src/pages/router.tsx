@@ -10,6 +10,7 @@ import NewOrderPage from './orders/new-order';
 import OrderPanelPage from './orders/order-panel';
 import ArchiveContent from './archives';
 import CollectionContent from './collections';
+import LobbyPage from './lobby';
 import UserContent from './users';
 import UserPanelPage from './users/user-panel.page';
 import ContractContent from './contracts';
@@ -17,6 +18,7 @@ import NewContractContent from './contracts/new-contract';
 import CandyContractContent from './contracts/candy';
 import NewCandyContractContent from './contracts/new-candy';
 import HttpLogContent from './http-logs';
+import GodViewPage from './godview';
 import React from 'react';
 import {GitcoinContext} from '../store';
 
@@ -26,6 +28,7 @@ const RouterWrapper = () => {
     return (
         <Container style={{marginTop: '1em'}}>
             <Switch>
+                <Route path={'/'} exact={true} component={LobbyPage} />{' '}
                 <Route
                     path={'/categories'}
                     exact={true}
@@ -56,9 +59,11 @@ const RouterWrapper = () => {
                 />{' '}
                 <Route path={'/archives'} exact component={ArchiveContent} />{' '}
                 <Route path={'/stats'} exact component={UserContent} />{' '}
+                <Route path={'/lobby'} exact component={LobbyPage} />{' '}
                 <Route path={'/users'} exact component={UserContent} />{' '}
                 <Route path={'/users/:uid'} exact component={UserPanelPage} />{' '}
                 <Route path={'/http-logs'} exact component={HttpLogContent} />
+                <Route path={'/godview'} exact component={GodViewPage} />
                 <Redirect from={'/contracts'} to="/contracts/product" exact />
                 <Route
                     path={'/contracts/product'}

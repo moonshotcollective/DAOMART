@@ -9,8 +9,21 @@ router.post(
     passport.authenticate('jwt.admin', {session: false}),
     (req, res, next) => {
         const body = req.body || {};
-        console.log('body', body);
         HttpLogController.getLogs(body)
+            .then((result) => {
+                HttpModule.sendResponse(req, res, result);
+            })
+            .catch((err) => {
+                HttpModule.sendError(req, res, err);
+            });
+    }
+);
+router.post(
+    '/unique-ip',
+    passport.authenticate('jwt.admin', {session: false}),
+    (req, res, next) => {
+        const body = req.body || {};
+        HttpLogController.getUniqueIpLogs(body)
             .then((result) => {
                 HttpModule.sendResponse(req, res, result);
             })

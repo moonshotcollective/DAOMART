@@ -1,11 +1,19 @@
 const ProductCategory = require('./product-category.model');
 const Product = require('./product.model');
 
-const getCategories = () => {
+const getCategories = ({keyword, skip, limit} = {}) => {
     return new Promise((resolve, reject) => {
-        ProductCategory.find({})
+        ProductCategory.find({
+            $or: [
+                keyword ? {name: new RegExp(keyword, 'i')} : {},
+                keyword ? {description: new RegExp(keyword, 'i')} : {},
+                keyword ? {tags: {$in: [new RegExp(keyword, 'i')]}} : {},
+            ],
+        })
             .sort({created_at: -1})
             .lean()
+            .skip(skip || 0)
+            .limit(limit || 100)
             .then((ddocs) => {
                 resolve(parseProductCategories(ddocs));
             })

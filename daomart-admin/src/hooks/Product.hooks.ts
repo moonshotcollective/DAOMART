@@ -33,7 +33,8 @@ const useGetProducts = (token: string): [Product[], boolean, any] => {
     return [products, loading, err];
 };
 const useGetProductCategories = (
-    token: string
+    token: string,
+    data?: CategorySearchParams
 ): [ProductCategory[], boolean, any] => {
     const [productcat, setproductcat] = React.useState<ProductCategory[]>([]);
     const [loading, setloading] = React.useState<boolean>(false);
@@ -45,7 +46,7 @@ const useGetProductCategories = (
         setloading(false);
         seterr(null);
         setproductcat([]);
-        GetProductCategories(token)
+        GetProductCategories(token, data)
             .then((result) => {
                 if (result.data.success) {
                     setproductcat(result.data.data);
@@ -62,7 +63,7 @@ const useGetProductCategories = (
                 seterr(err);
                 setproductcat([]);
             });
-    }, [token]);
+    }, [token, data?.keyword]);
     return [productcat, loading, err];
 };
 

@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {useGetProducts} from '../../hooks/Shop.hooks';
+import {useGetProducts} from '../../hooks/Product.hooks';
 import {GitcoinContext} from '../../store';
 import Title from '../../components/Title.component';
 function ProductContent() {

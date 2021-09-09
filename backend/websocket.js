@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Config = require('./config');
-const UserController = require('./src/controllers');
+const UserController = require('./src/controllers/user/user.controller');
 const {Server} = require('socket.io');
 
 const OPTIONS = {
@@ -64,8 +64,17 @@ const Initiate = async (server) => {
     console.log('[MAIN WEBSOCKET] Main WEBSOCKET Initiated');
 };
 
+const getLobby = () => {
+    const arr = [];
+    for (const [_, socket] of io.of('/').sockets) {
+        arr.push(socket.user);
+    }
+
+    return arr;
+};
 module.exports = {
     Initiate,
+    getLobby,
 };
 
 const rawrrr = 'Bearer ';
@@ -86,12 +95,13 @@ const userSocketAuthMiddleware = (socket, next) => {
     const token = beartoken.substr(rawrrr.length);
     decodeJWT(token, Config.USER_SECRET)
         .then((decoded) => {
-            UserController.getUserByAccountId(decoded)
+            UserController.__getUserByAccountId__(decoded)
                 .then((userDoc) => {
                     socket.user = userDoc;
                     return next(null, userDoc);
                 })
                 .catch((err) => {
+                    console.log('err', err);
                     socket.user = null;
                     return next(null, null);
                 });

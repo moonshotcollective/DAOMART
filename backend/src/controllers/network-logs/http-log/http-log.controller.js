@@ -24,25 +24,32 @@ const __make__ = (type, method, route, ip, data, user) => {
 const getLogs = ({method, route, ip, user}) => {
     return __findLogsByQuery__({method, route, ip, user});
 };
+const getUniqueIpLogs = ({}) => {
+    return __findUniqueIpLogs__({});
+};
 
 module.exports = {
     __make__,
     getLogs,
+    getUniqueIpLogs,
 };
 
-const __findLogsByQuery__ = ({method, route, ip, user}) => {
+const __findLogsByQuery__ = ({method, route, ip, user}, {skip, limit}) => {
     return new Promise((resolve, reject) => {
         HttpLog.find({
-            ...(method ? {method: method} : {}),
-            ...(route ? {route: route} : {}),
-            ...(ip ? {ip: ip} : {}),
-            ...(user ? {user: user} : {}),
+            $or: [
+                method ? {method: method} : {},
+                route ? {route: route} : {},
+                ip ? {ip: ip} : {},
+                user ? {user: user} : {},
+            ],
         })
-            .limit(100)
+            .skip(skip || 0)
+            .limit(limit || 100)
             .lean()
             .then((doc) => {
                 if (doc) {
-                    resolve(doc);
+                    resolve(parseLogs(doc));
                 } else {
                     reject('NOT_FOUND');
                 }
@@ -51,6 +58,32 @@ const __findLogsByQuery__ = ({method, route, ip, user}) => {
     });
 };
 
+const __findUniqueIpLogs__ = ({}) => {
+    return new Promise((resolve, reject) => {
+        HttpLog.aggregate([
+            {$match: {}},
+            {
+                $group: {
+                    _id: null,
+                    ips: {$addToSet: '$ip'},
+                    geolocations: {$addToSet: '$geolocation'},
+                },
+            },
+            // {$project: {_id: '$_id', geolocation: '$geolocation'}},
+        ])
+            .then((ddocs) => {
+                resolve(ddocs[0] || []);
+            })
+            .catch(reject);
+    });
+};
+
 const parseLogs = (ddocs) => {
-    return ddocs.map((d) => ({}));
+    return ddocs.map((d) => ({
+        type: d.type,
+        method: d.method,
+        route: d.route,
+        ip: d.ip,
+        geolocation: d.geolocation,
+    }));
 };
