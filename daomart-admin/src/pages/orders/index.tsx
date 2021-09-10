@@ -13,7 +13,7 @@ import Title from '../../components/Title.component';
 import {useHistory} from 'react-router-dom';
 function OrderContent() {
     const {state} = React.useContext(GitcoinContext);
-    const [orders] = useGetOrders(state.token, {});
+    const [orders] = useGetOrders(state.token);
 
     const els = orders.map((c) => <OrderCard key={c.order_id} order={c} />);
     return (

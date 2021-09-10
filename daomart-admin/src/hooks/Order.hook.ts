@@ -3,7 +3,7 @@ import {GetOrders, GetOrderById} from '../network/api';
 
 const useGetOrders = (
     token: string,
-    {user}: {user?: string},
+    user?: string,
     trigger = false
 ): [Order[], boolean, any] => {
     const [orders, setorders] = React.useState<Order[]>([]);
