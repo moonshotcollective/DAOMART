@@ -123,7 +123,8 @@ const ProductPage = () => {
             Number(lastPaidBlock),
             Number(blockNumber),
             Number(currentPaid),
-            Number(currentStreak)
+            Number(currentStreak),
+            currentCoef
         );
 
     ///

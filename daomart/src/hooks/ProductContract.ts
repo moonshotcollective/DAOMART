@@ -576,7 +576,8 @@ const useGetCompoundingInterest = (
     startingBlock?: number,
     endingBlock?: number,
     amount?: number,
-    streak?: number
+    streak?: number,
+    coef?: string
 ): [string | null, boolean, any] => {
     const [interest, setinterest] = React.useState<string | null>(null);
     const [loading, setloading] = React.useState<boolean>(false);
@@ -589,7 +590,7 @@ const useGetCompoundingInterest = (
         if (!contract || !contract.methods) {
             return;
         }
-        if (!startingBlock || !endingBlock || !amount || !streak) {
+        if (!startingBlock || !endingBlock || !amount || !streak || !coef) {
             return;
         }
 
@@ -600,7 +601,8 @@ const useGetCompoundingInterest = (
                     startingBlock,
                     endingBlock,
                     ethers.utils.parseEther(amount.toString()),
-                    streak
+                    streak,
+                    coef
                 )
                 .call()
 
