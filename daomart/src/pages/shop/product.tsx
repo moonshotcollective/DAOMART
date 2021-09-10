@@ -15,20 +15,21 @@ import {
     useGetEtherAmountForX,
     useGetCandyAmountForX,
     useGetAllProducts,
-    useGetPriceChangeForPrice,
     useGetInterestPerBlock,
     useGetCurrentPaid,
     useGetCurrentStreak,
     useGetLastPaidBlock,
     useGetMinMaxStreakInterval,
     useGetCompoundingInterest,
+    useGetCoefForId,
+    useGetQuantityForId,
 } from '../../hooks/ProductContract';
 import {
     useGetProductContract,
     useGetTokenContract,
     useGetTokenContractMeta,
 } from '../../hooks/Contract.hook';
-import {ethers} from 'ethers';
+import {BigNumber, ethers} from 'ethers';
 import {useGetCandyAllowance} from '../../hooks/Candy.hook';
 import {ACTIONS} from '../../store/actions';
 import {useGetBlockNumber} from '../../hooks/Balance';
@@ -58,14 +59,22 @@ const ProductPage = () => {
     ///
     const refreshTrigger = buyCandyLoading || buyEtherLoading;
     const [currentX] = useGetXByIndex(contract, pId, refreshTrigger);
+    const [currentCoef] = useGetCoefForId(contract, pId, refreshTrigger);
+    const [currentQuantity] = useGetQuantityForId(
+        contract,
+        pId,
+        refreshTrigger
+    );
     const [ethPrice, etherPericeChangeLoading] = useGetEtherAmountForX(
         contract,
         currentX,
+        currentCoef,
         refreshTrigger
     );
     const [candyPrice, candyPriceLoading] = useGetCandyAmountForX(
         contract,
         currentX,
+        currentCoef,
         refreshTrigger
     );
 
@@ -163,7 +172,7 @@ const ProductPage = () => {
             const price = ethers.utils.parseEther(candyPrice);
 
             const parsedAllowence = ethers.utils.parseEther(
-                candyAllowance.toString()
+                candyAllowance > 1e-2 ? candyAllowance.toString() : '0'
             );
             if (price.gt(parsedAllowence)) {
                 setBuyCandyLoading(true);
@@ -414,7 +423,9 @@ const ProductPage = () => {
                         {` BUY IN FULL `}{' '}
                         <span
                             style={{fontSize: '0.75rem', color: '#757575'}}
-                        >{` CURRENT X IS ${currentX}`}</span>
+                        >{` CURRENT X IS ${currentX} AND MAX QUANTITY IS ${currentQuantity} WITH COEF OF ${
+                            Number(currentCoef || 0) / 1e3
+                        }`}</span>
                     </Typography>
                     <Container
                         style={{

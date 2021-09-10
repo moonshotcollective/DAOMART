@@ -3,7 +3,7 @@ import {GetOrders, GetOrderById} from '../network/api';
 
 const useGetOrders = (
     token: string,
-    data?: any,
+    {user}: any,
     trigger = false
 ): [Order[], boolean, any] => {
     const [orders, setorders] = React.useState<Order[]>([]);
@@ -16,7 +16,7 @@ const useGetOrders = (
         setloading(false);
         seterr(null);
         setorders([]);
-        GetOrders(token, data)
+        GetOrders(token, {user: user})
             .then((result) => {
                 if (result.data.success) {
                     setorders(result.data.data);
@@ -33,7 +33,7 @@ const useGetOrders = (
                 seterr(err);
                 setorders([]);
             });
-    }, [token, data, trigger]);
+    }, [token, user, trigger]);
     return [orders, loading, err];
 };
 const useGetOrderById = (

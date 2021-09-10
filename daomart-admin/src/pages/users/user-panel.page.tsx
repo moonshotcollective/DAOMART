@@ -203,6 +203,7 @@ const ActiveOrderTabContent = ({value, index, user}) => {
 };
 const OrderTabContent = ({value, index, user, token}) => {
     const [activeOrders] = useGetOrders(token, {user: user?.user_id});
+
     console.log('activeOrders', activeOrders);
     const els = activeOrders.map((c, i) => (
         <OrderCard key={c.order_id} order={c} />

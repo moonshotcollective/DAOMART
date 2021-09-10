@@ -86,10 +86,103 @@ const useGetXByIndex = (
     }, [contract, id, trigger]);
     return [currentX, loading, err];
 };
+const useGetCoefForId = (
+    contract: any,
+    id?: string,
+    trigger = false
+): [string, boolean, any] => {
+    const [coef, setcoef] = React.useState<string>('');
+    const [loading, setloading] = React.useState<boolean>(false);
+    const [err, seterr] = React.useState<any>('');
+
+    React.useMemo(async () => {
+        if (!contract || !contract.methods) {
+            return;
+        }
+
+        if (!id) {
+            return;
+        }
+
+        setloading(false);
+        seterr(null);
+        setcoef('');
+
+        try {
+            contract.methods
+                .coefficients(id)
+                .call()
+                .then((result) => {
+                    setcoef(result);
+                    setloading(false);
+                    seterr(null);
+                })
+                .catch((err) => {
+                    console.log('err', err);
+                    setloading(false);
+                    seterr(err);
+                    setcoef('');
+                });
+        } catch (err) {
+            console.log('err', err);
+            setloading(false);
+            seterr(err);
+            setcoef('');
+        }
+    }, [contract, id, trigger]);
+    return [coef, loading, err];
+};
+const useGetQuantityForId = (
+    contract: any,
+    id?: string,
+    trigger = false
+): [string, boolean, any] => {
+    const [coef, setcoef] = React.useState<string>('');
+    const [loading, setloading] = React.useState<boolean>(false);
+    const [err, seterr] = React.useState<any>('');
+
+    React.useMemo(async () => {
+        if (!contract || !contract.methods) {
+            return;
+        }
+
+        if (!id) {
+            return;
+        }
+
+        setloading(false);
+        seterr(null);
+        setcoef('');
+
+        try {
+            contract.methods
+                .quantities(id)
+                .call()
+                .then((result) => {
+                    setcoef(result);
+                    setloading(false);
+                    seterr(null);
+                })
+                .catch((err) => {
+                    console.log('err', err);
+                    setloading(false);
+                    seterr(err);
+                    setcoef('');
+                });
+        } catch (err) {
+            console.log('err', err);
+            setloading(false);
+            seterr(err);
+            setcoef('');
+        }
+    }, [contract, id, trigger]);
+    return [coef, loading, err];
+};
 
 const useGetEtherAmountForX = (
     contract: any,
     x?: string,
+    coef?: string,
     trigger = false
 ): [string, boolean, any] => {
     const [currentPriceChange, setcurrentPriceChange] =
@@ -108,11 +201,14 @@ const useGetEtherAmountForX = (
         if (!x) {
             return;
         }
+        if (!coef) {
+            return;
+        }
 
         try {
             setloading(true);
             contract.methods
-                .getEtherAmountForX(x)
+                .getEtherAmountForX(x, coef)
                 .call()
                 .then((result) => {
                     setcurrentPriceChange(
@@ -133,12 +229,13 @@ const useGetEtherAmountForX = (
             seterr(err);
             setcurrentPriceChange('');
         }
-    }, [contract, x, trigger]);
+    }, [contract, x, coef, trigger]);
     return [currentPriceChange, loading, err];
 };
 const useGetCandyAmountForX = (
     contract: any,
     x?: string,
+    coef?: string,
     trigger = false
 ): [string, boolean, any] => {
     const [currentPriceChange, setcurrentPriceChange] =
@@ -157,11 +254,13 @@ const useGetCandyAmountForX = (
         if (!x) {
             return;
         }
-
+        if (!coef) {
+            return;
+        }
         try {
             setloading(true);
             contract.methods
-                .getCandyAmountForX(x)
+                .getCandyAmountForX(x, coef)
                 .call()
                 .then((result) => {
                     setcurrentPriceChange(
@@ -182,13 +281,14 @@ const useGetCandyAmountForX = (
             seterr(err);
             setcurrentPriceChange('');
         }
-    }, [contract, x, trigger]);
+    }, [contract, x, coef, trigger]);
     return [currentPriceChange, loading, err];
 };
 
 const useGetPriceChangeForPrice = (
     contract?: any,
     initAmount?: string,
+    coef?: string,
     trigger = false
 ): [string, boolean, any] => {
     const [amount, setamount] = React.useState<string>('');
@@ -202,6 +302,9 @@ const useGetPriceChangeForPrice = (
         if (!initAmount) {
             return;
         }
+        if (!coef) {
+            return;
+        }
         setloading(false);
         seterr(null);
         setamount('');
@@ -209,7 +312,7 @@ const useGetPriceChangeForPrice = (
         try {
             setloading(true);
             contract.methods
-                .getPriceChangeForPrice(initAmount)
+                .getPriceChangeForPrice(initAmount, coef)
                 .call()
                 .then((result) => {
                     console.log('result', result);
@@ -229,7 +332,7 @@ const useGetPriceChangeForPrice = (
             seterr(err);
             setamount('');
         }
-    }, [contract, initAmount, trigger]);
+    }, [contract, initAmount, coef, trigger]);
     return [amount, loading, err];
 };
 
@@ -524,6 +627,8 @@ const useGetCompoundingInterest = (
 
 export {
     useGetXByIndex,
+    useGetCoefForId,
+    useGetQuantityForId,
     useGetAllProducts,
     useGetEtherAmountForX,
     useGetCandyAmountForX,
