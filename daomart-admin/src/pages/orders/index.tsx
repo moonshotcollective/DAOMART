@@ -47,8 +47,8 @@ const OrderCard = ({order}) => {
     return (
         <TableRow style={{cursor: 'pointer'}} onClick={navigate}>
             <TableCell scope="row">{order.type}</TableCell>
-            <TableCell scope="row">{order.item.name}</TableCell>
-            <TableCell>{order.user.name}</TableCell>
+            <TableCell scope="row">{order.item?.name || '---'}</TableCell>
+            <TableCell>{order.user?.name || '---'}</TableCell>
             <TableCell>{order.status}</TableCell>
         </TableRow>
     );
