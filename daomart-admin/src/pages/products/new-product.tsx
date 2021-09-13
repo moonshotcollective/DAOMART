@@ -16,7 +16,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import {MakeNewProduct} from '../../network/api';
 import {constTags} from '../../util/tags';
-import {useGetProductCategories} from '../../hooks/Product.hooks';
+import {useGetProductCategories} from '../../hooks/Product.hook';
 import {useGetProductContracts} from '../../hooks/Contract.hook';
 import {useGetProductContractItems} from '../../hooks/ProductContract.hook';
 import {GitcoinContext} from '../../store';
@@ -27,6 +27,7 @@ function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 const initState: Product = {
+    product_id: '',
     contract: '',
     category: '',
     name: '',
@@ -54,7 +55,7 @@ function NewProductPage() {
     };
     const onNew = () => {
         setLoading(true);
-        console.log('newProduct', newProduct);
+
         MakeNewProduct(state.token, newProduct)
             .then((result) => {
                 setSnackbarOpen('Success');

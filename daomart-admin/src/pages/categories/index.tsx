@@ -6,7 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import Title from '../../components/Title.component';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-import {useGetProductCategories} from '../../hooks/Product.hooks';
+import {useGetProductCategories} from '../../hooks/Product.hook';
 import {GitcoinContext} from '../../store';
 import {useTheme} from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';

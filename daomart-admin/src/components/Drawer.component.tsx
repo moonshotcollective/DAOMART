@@ -24,6 +24,7 @@ import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
 import {GitcoinContext} from '../store';
 import React from 'react';
 import {ACTIONS} from '../store/actions';
+import {useTheme} from '@material-ui/styles';
 const drawerWidth: number = 240;
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -48,12 +49,15 @@ const useStyles = makeStyles((theme: Theme) =>
                         width: theme.spacing(9),
                     },
                 }),
+                ///
+                height: '100vh',
             },
         }),
     })
 );
 
 const DrawerComponent = ({}) => {
+    const theme = useTheme<Theme>();
     const {state, dispatch} = React.useContext(GitcoinContext);
     const styles = useStyles({open: state.drawerOpen});
     const router = useHistory();
@@ -73,41 +77,51 @@ const DrawerComponent = ({}) => {
         >
             <Toolbar
                 style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'flex-end',
                     padding: 8,
+                    position: 'sticky',
+                    top: 0,
+                    backgroundColor: theme.palette.primary.light,
                 }}
             >
-                <Typography
-                    component="h1"
-                    variant="h6"
-                    color="inherit"
-                    noWrap
+                <div
                     style={{
-                        flexGrow: 1,
+                        width: '100%',
+                        display: 'flex',
                     }}
                 >
-                    <Button color="primary" onClick={() => navigate('/')}>
-                        DAOMART
-                    </Button>
-                </Typography>
-                <IconButton onClick={toggleDrawer}>
-                    <ChevronLeftIcon />
-                </IconButton>
+                    <Typography
+                        component="div"
+                        variant="h6"
+                        color="inherit"
+                        noWrap
+                        style={{
+                            flexGrow: 1,
+                            display: 'flex',
+                        }}
+                    >
+                        <Button color="primary" onClick={() => navigate('/')}>
+                            DAOMART
+                        </Button>
+                    </Typography>
+                    <IconButton onClick={toggleDrawer}>
+                        <ChevronLeftIcon />
+                    </IconButton>
+                </div>
             </Toolbar>
             <Divider />
-            <List>
-                <MainListItems />
-            </List>
-            <Divider />
-            <List>
-                <SecondaryListItems />
-            </List>
-            <Divider />
-            <List>
-                <ContractListItems />
-            </List>
+            <div style={{width: '100%', position: 'relative'}}>
+                <List>
+                    <MainListItems />
+                </List>
+                <Divider />
+                <List>
+                    <SecondaryListItems />
+                </List>
+                <Divider />
+                <List>
+                    <ContractListItems />
+                </List>
+            </div>
         </Drawer>
     );
 };
@@ -121,8 +135,10 @@ const MainListItems = () => {
         router.push(path);
     };
     return (
-        <div>
-            <ListSubheader inset>Shop Management</ListSubheader>
+        <div style={{position: 'relative'}}>
+            <ListSubheader inset style={{top: '4rem'}}>
+                Shop Management
+            </ListSubheader>
             <ListItem button onClick={() => navigate('/categories')}>
                 <ListItemIcon>
                     <DashboardIcon />

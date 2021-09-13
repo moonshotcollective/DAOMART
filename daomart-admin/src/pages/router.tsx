@@ -5,6 +5,7 @@ import CategoryContent from './categories';
 import NewCategoryContent from './categories/new-category';
 import ProductContent from './products';
 import NewProductContent from './products/new-product';
+import ProductPanelPage from './products/product-panel';
 import OrderContent from './orders';
 import NewOrderPage from './orders/new-order';
 import OrderPanelPage from './orders/order-panel';
@@ -48,6 +49,11 @@ const RouterWrapper = () => {
                     path={'/products/new'}
                     exact={true}
                     component={NewProductContent}
+                />{' '}
+                <Route
+                    path={'/products/:pid'}
+                    exact={true}
+                    component={ProductPanelPage}
                 />
                 <Route path={'/orders'} exact component={OrderContent} />{' '}
                 <Route path={'/orders/new'} exact component={NewOrderPage} />{' '}

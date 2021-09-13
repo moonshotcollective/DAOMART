@@ -1,7 +1,7 @@
 /// <reference types="react-scripts" />
 type Product = {
-    contract?: string;
-    product_id?: string;
+    contract: string;
+    product_id: string;
     name: string;
     description: string;
     category: string;

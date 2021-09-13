@@ -114,6 +114,31 @@ export const GetProducts = (token: string) =>
             'Content-Type': 'application/json',
         },
     });
+
+export const GetProductById = (token: string, pid: any) =>
+    axios({
+        method: 'POST',
+        url: GetUrl('order/pid'),
+        data: {pid: pid},
+        headers: {
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+        },
+    });
+export const UpdateProductStatus = (
+    token: string,
+    pid: string,
+    status: string
+) =>
+    axios({
+        method: 'POST',
+        url: GetUrl('product/update'),
+        data: {pid: pid, status: status},
+        headers: {
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+        },
+    });
 export const GetProductCategories = (
     token: string,
     data?: CategorySearchParams
@@ -148,11 +173,11 @@ export const GetOrders = (token: string, data?: any) =>
             'Content-Type': 'application/json',
         },
     });
-export const GetOrderById = (token: string, data?: any) =>
+export const GetOrderById = (token: string, oid: any) =>
     axios({
         method: 'POST',
         url: GetUrl('order/oid'),
-        data: data,
+        data: {oid: oid},
         headers: {
             Authorization: 'Bearer ' + token,
             'Content-Type': 'application/json',

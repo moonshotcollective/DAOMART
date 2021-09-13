@@ -67,7 +67,10 @@ body {
 .MuiTableCell-head {
     font-weight: 700 !important;
 }
-
+.MuiPagination-root {
+    display: flex !important;
+    align-items: center;
+}
 .map {
     background-color: 'crimson';
     width: 100%;

@@ -51,7 +51,7 @@ const useGetOrderById = (
         setloading(false);
         seterr(null);
         setorder(null);
-        GetOrderById(token, {oid: oid})
+        GetOrderById(token, oid)
             .then((result) => {
                 if (result.data.success) {
                     setorder(result.data.data);
@@ -68,7 +68,7 @@ const useGetOrderById = (
                 seterr(err);
                 setorder(null);
             });
-    }, [token, trigger]);
+    }, [token, oid, trigger]);
     return [order, loading, err];
 };
 
