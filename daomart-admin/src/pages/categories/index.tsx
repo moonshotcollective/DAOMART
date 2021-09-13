@@ -1,20 +1,15 @@
 import React from 'react';
-
 import Container from '@material-ui/core/Container';
 import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
-import ListItem, {ListItemProps} from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
+import ListItem from '@material-ui/core/ListItem';
 import Title from '../../components/Title.component';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import {useGetProductCategories} from '../../hooks/Product.hooks';
 import {GitcoinContext} from '../../store';
 import {useTheme} from '@material-ui/core/styles';
-import InboxIcon from '@material-ui/icons/Inbox';
 import Avatar from '@material-ui/core/Avatar';
-import Chip from '@material-ui/core/Chip';
 import {useHistory} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import PhotoSizeSelectActualIcon from '@material-ui/icons/PhotoSizeSelectActual';
@@ -79,10 +74,10 @@ export default CategoryContent;
 const CategoryCard = ({category}) => {
     const router = useHistory();
 
-    const navigate = (uid) => {
+    const navigate = () => {
         router.push(`/categories/${category.category_id}`);
     };
-    console.log('category', category);
+
     return (
         <ListItem
             button
