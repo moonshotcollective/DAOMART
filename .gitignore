@@ -20,4 +20,6 @@ yarn.lock
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-backend/TODO
+/TODO
+**/run.bat
+**/editor.bat
