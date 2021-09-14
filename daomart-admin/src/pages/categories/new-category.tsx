@@ -1,10 +1,6 @@
-import React, {ChangeEvent} from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Box from '@material-ui/core/Box';
+import React from 'react';
 import Container from '@material-ui/core/Container';
-import {DrawerComponent} from '../../components/Drawer.component';
-import {StatusBarComponent} from '../../components/StatusBar.component';
-import {makeStyles, Paper, Divider, Input} from '@material-ui/core';
+import {Paper, Divider, Input} from '@material-ui/core';
 import {Button} from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
@@ -16,11 +12,10 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import ListItemText from '@material-ui/core/ListItemText';
-
-import {adminPostReqHandler} from '../../network';
 import {Chip} from '@material-ui/core';
 import {constTags} from '../../util/tags';
 import {GitcoinContext} from '../../store';
+import {MakeNewProductCategory} from '../../network/api';
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -41,7 +36,7 @@ function NewCategoryPage() {
 
     const onNew = () => {
         setLoading(true);
-        adminPostReqHandler(state.token, 'category/new', newCat)
+        MakeNewProductCategory(state.token, newCat)
             .then((result) => {
                 setSnackbarOpen(true);
                 setLoading(false);

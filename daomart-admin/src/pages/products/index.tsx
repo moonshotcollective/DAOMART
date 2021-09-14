@@ -43,7 +43,6 @@ function ProductContent() {
                     <FormControl
                         style={{
                             width: '100%',
-                            margin: '1rem 0',
                             color: theme.palette.primary.light,
                         }}
                     >

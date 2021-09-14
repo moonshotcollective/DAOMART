@@ -139,6 +139,16 @@ export const UpdateProductStatus = (
             'Content-Type': 'application/json',
         },
     });
+export const MakeNewProductCategory = (token: string, data: ProductCategory) =>
+    axios({
+        method: 'POST',
+        url: GetUrl('category/new'),
+        data: data,
+        headers: {
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+        },
+    });
 export const GetProductCategories = (
     token: string,
     data?: CategorySearchParams
@@ -152,7 +162,16 @@ export const GetProductCategories = (
             'Content-Type': 'application/json',
         },
     });
-
+export const GetCategoryById = (token: string, cid: any) =>
+    axios({
+        method: 'POST',
+        url: GetUrl('category/cid'),
+        data: {cid: cid},
+        headers: {
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+        },
+    });
 export const MakeNewOrder = (token: string, data?: any) =>
     axios({
         method: 'POST',
