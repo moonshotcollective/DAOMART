@@ -79,9 +79,15 @@ const getLobby = () => {
 
     return arr;
 };
+
+const getProductLobby = (d) => {
+    console.log('d', d);
+    return [];
+};
 module.exports = {
     Initiate,
     getLobby,
+    getProductLobby,
 };
 
 const rawrrr = 'Bearer ';

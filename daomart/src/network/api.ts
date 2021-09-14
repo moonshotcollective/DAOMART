@@ -1,6 +1,16 @@
 import axios from 'axios';
 import GetUrl from './NETWORK_CONSTS';
 
+export const GetProductLobby = (token: string, pid: string) =>
+    axios({
+        method: 'POST',
+        url: GetUrl('lobby/product'),
+        data: {pid: pid},
+        headers: {
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+        },
+    });
 export const GetCandyContract = (token?: string, data?: any) =>
     axios({
         method: 'POST',

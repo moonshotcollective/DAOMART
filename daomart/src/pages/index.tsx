@@ -8,10 +8,11 @@ import StatusBarComponent from '../components/StatusBar.component';
 import Navbar from '../components/Navbar.component';
 import {GitcoinContext} from '../store';
 import {RouterWrapper, AuthRouter} from './router';
+import {useGetSocket} from '../network/socket';
 
 const Pages = () => {
     const {state} = React.useContext(GitcoinContext);
-
+    const socket = useGetSocket(state.token);
     return (
         <Container maxWidth="xl">
             <Box className="background">

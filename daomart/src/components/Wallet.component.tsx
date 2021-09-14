@@ -117,6 +117,15 @@ const WalletComponent = ({}) => {
         };
     }, []);
 
+    React.useEffect(() => {
+        requestSwitchNetwork();
+    }, []);
+    const requestSwitchNetwork = async () => {
+        await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{chainId: '0x' + (42).toString(16)}],
+        });
+    };
     return (
         <div
             style={{

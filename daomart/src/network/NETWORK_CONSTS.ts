@@ -12,4 +12,4 @@ const GetBaseUrl = (i: string) => {
 
 export default GetUrl;
 
-export {GetBaseUrl};
+export {SERVER, GetBaseUrl};
