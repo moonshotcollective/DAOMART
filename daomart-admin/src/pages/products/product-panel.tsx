@@ -17,11 +17,9 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import {UpdateProductStatus} from '../../network/api';
+import {useGetOrdersByProduct} from '../../hooks/Order.hook';
 function ProductPanelPage() {
     const {state} = React.useContext(GitcoinContext);
     const [trigger, setTrigger] = React.useState(false);
@@ -30,7 +28,6 @@ function ProductPanelPage() {
     const [product] = useGetProductById(state.token, pid, trigger);
     const [value, setValue] = React.useState(0);
 
-    console.log('product', product);
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
     };
@@ -44,7 +41,8 @@ function ProductPanelPage() {
                     aria-label="simple tabs example"
                 >
                     <Tab label="Product Card" {...a11yProps(0)} />
-                    <Tab label="Activity" {...a11yProps(1)} />
+                    <Tab label="Orders" {...a11yProps(1)} />
+                    <Tab label="Activity" {...a11yProps(2)} />
                 </Tabs>
             </AppBar>
             <ProductTabContent
@@ -54,7 +52,13 @@ function ProductPanelPage() {
                 token={state.token}
                 onTrigger={() => setTrigger(!trigger)}
             />
-            <ActivityTabContent value={value} index={1} product={product} />
+            <OrderTabContent
+                value={value}
+                index={1}
+                product={product}
+                token={state.token}
+            />
+            <ActivityTabContent value={value} index={2} product={product} />
         </Container>
     );
 }
@@ -116,6 +120,40 @@ const ProductTabContent = ({
                     </div>
                 </div>
                 <div style={{padding: 8}}>ACTIONS</div>
+            </div>
+        </TabPanel>
+    );
+};
+const OrderTabContent = ({value, index, product, token}) => {
+    const activeProducts = useGetOrdersByProduct(token, product?.product_id);
+    return (
+        <TabPanel value={value} index={index}>
+            <div style={{minHeight: 480}}>
+                <Table aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Event</TableCell>
+                            <TableCell>Name</TableCell>
+                            <TableCell>Description</TableCell>
+                            <TableCell>Timestamp</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {activeProducts.map((account, i) => (
+                            <TableRow key={i}>
+                                <TableCell>
+                                    <Typography
+                                        variant="overline"
+                                        component={'h3'}
+                                    >
+                                        TODO
+                                    </Typography>
+                                </TableCell>
+                                <TableCell></TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
             </div>
         </TabPanel>
     );

@@ -22,7 +22,7 @@ import TableRow from '@material-ui/core/TableRow';
 
 import {NetworkLogComponent} from '../../components/NetworkLog.component';
 import {useGetHttpLogs} from '../../hooks/Log.hook';
-import {useGetOrders} from '../../hooks/Order.hook';
+import {useGetOrdersByUser} from '../../hooks/Order.hook';
 function UserContent() {
     const {state} = React.useContext(GitcoinContext);
 
@@ -202,7 +202,7 @@ const ActiveOrderTabContent = ({value, index, user}) => {
     );
 };
 const OrderTabContent = ({value, index, user, token}) => {
-    const [activeOrders] = useGetOrders(token, user?.user_id);
+    const [activeOrders] = useGetOrdersByUser(token, user?.user_id);
 
     console.log('activeOrders', activeOrders);
     const els = activeOrders.map((c, i) => (
@@ -245,7 +245,6 @@ const OrderCard = ({order}) => {
 
 const LogTabContent = ({value, index, user, token}) => {
     const [logs] = useGetHttpLogs(token, {user: user?.user_id});
-    console.log('logs', logs);
 
     return (
         <TabPanel value={value} index={index}>

@@ -182,11 +182,11 @@ export const MakeNewOrder = (token: string, data?: any) =>
             'Content-Type': 'application/json',
         },
     });
-export const GetOrders = (token: string, data?: any) =>
+export const GetOrders = (token: string, {item, user}: OrderSearchParams) =>
     axios({
         method: 'POST',
         url: GetUrl('order/query'),
-        data: data,
+        data: {item: item, user: user},
         headers: {
             Authorization: 'Bearer ' + token,
             'Content-Type': 'application/json',

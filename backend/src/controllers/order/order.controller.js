@@ -16,7 +16,8 @@ const newOrder = ({type, item, user}) => {
             .catch(reject);
     });
 };
-const getOrdersByQuery = ({type, item, user}) => {
+const getOrdersByQuery = ({type, item, user} = {}) => {
+    console.log('item,user', item, user);
     return __getOrderByQuery__({type, item, user});
 };
 const getById = ({oid}) => {
@@ -57,6 +58,11 @@ module.exports = {
 
 const __getOrderByQuery__ = ({user, item, type} = {}) => {
     return new Promise((resolve, reject) => {
+        console.log('query', {
+            ...(type ? {type: type} : {}),
+            ...(user ? {user: user} : {}),
+            ...(item ? {item: item} : {}),
+        });
         Order.find({
             ...(type ? {type: type} : {}),
             ...(user ? {user: user} : {}),

@@ -68,3 +68,8 @@ interface HttpLogSearchParams {
 interface CategorySearchParams {
     keyword?: string;
 }
+interface OrderSearchParams {
+    user?: string;
+    item?: string;
+    keyword?: string;
+}

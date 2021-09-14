@@ -21,7 +21,7 @@ const __make__ = (type, method, route, ip, data, user) => {
     });
 };
 
-const getLogs = ({method, route, ip, user}) => {
+const getLogs = ({method, route, ip, user} = {}) => {
     return __findLogsByQuery__({method, route, ip, user});
 };
 const getUniqueIpLogs = ({}) => {
@@ -34,7 +34,10 @@ module.exports = {
     getUniqueIpLogs,
 };
 
-const __findLogsByQuery__ = ({method, route, ip, user}, {skip, limit}) => {
+const __findLogsByQuery__ = (
+    {method, route, ip, user} = {},
+    {skip, limit} = {}
+) => {
     return new Promise((resolve, reject) => {
         HttpLog.find({
             $or: [

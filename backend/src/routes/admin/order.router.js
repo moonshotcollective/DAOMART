@@ -8,7 +8,7 @@ router.post(
     '/query',
     passport.authenticate('jwt.admin', {session: false}),
     (req, res, next) => {
-        const body = req.params || {};
+        const body = req.body || {};
 
         OrderController.getOrdersByQuery(body)
             .then((result) => {
