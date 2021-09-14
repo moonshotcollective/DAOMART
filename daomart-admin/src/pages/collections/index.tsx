@@ -84,7 +84,7 @@ function CollectionContent() {
                             )
                         ) : (
                             <ListItem button divider>
-                                NO PRODUCTS FOUNDS
+                                NO COLLECTIONS FOUNDS
                             </ListItem>
                         )}
                     </div>

@@ -12,12 +12,26 @@ import PeopleIcon from '@material-ui/icons/People';
 import {Typography, Chip, Link} from '@material-ui/core';
 import {red, green, blue, cyan, pink} from '@material-ui/core/colors';
 function UserListComponent({users}: {users: User[]}) {
+    const [perPage, setPerPage] = React.useState(5);
+    const [page, setPage] = React.useState(1);
     const els = users.map((c, i) => (
         <UserCard key={c.user_id} user={c} i={i} />
     ));
     return (
         <List aria-label="main mailbox folders" style={{padding: 0}}>
-            <div>{els}</div>
+            <div>
+                {' '}
+                {els.length ? (
+                    els.slice(
+                        (page - 1) * perPage,
+                        (page - 1) * perPage + perPage
+                    )
+                ) : (
+                    <ListItem button divider>
+                        NO USERS FOUNDS
+                    </ListItem>
+                )}
+            </div>
         </List>
     );
 }

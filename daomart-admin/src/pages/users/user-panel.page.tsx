@@ -34,6 +34,7 @@ import {
     deepPurple,
 } from '@material-ui/core/colors';
 import {UpdateUserBadge, UpdateUserStatus} from '../../network/api';
+import OrderListComponent from '../orders/order.list';
 function UserContent() {
     const {state} = React.useContext(GitcoinContext);
 
@@ -446,26 +447,11 @@ const ActiveOrderTabContent = ({value, index, user}) => {
     );
 };
 const OrderTabContent = ({value, index, user, token}) => {
-    const [activeOrders] = useGetOrdersByUser(token, user?.user_id);
+    const [orders] = useGetOrdersByUser(token, user?.user_id);
 
-    const els = activeOrders.map((c, i) => (
-        <OrderCard key={c.order_id} order={c} />
-    ));
     return (
         <TabPanel value={value} index={index}>
-            <div style={{minHeight: 480}}>
-                <Table aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Type</TableCell>
-                            <TableCell>Item Name</TableCell>
-                            <TableCell>User Name</TableCell>
-                            <TableCell>Status</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>{els}</TableBody>
-                </Table>
-            </div>
+            <OrderListComponent orders={orders} />
         </TabPanel>
     );
 };

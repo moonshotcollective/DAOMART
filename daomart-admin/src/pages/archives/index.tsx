@@ -83,7 +83,7 @@ function ArchiveContent() {
                             )
                         ) : (
                             <ListItem button divider>
-                                NO PRODUCTS FOUNDS
+                                NO ARCHIVE RECORD FOUNDS
                             </ListItem>
                         )}
                     </div>

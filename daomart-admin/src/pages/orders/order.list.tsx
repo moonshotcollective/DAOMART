@@ -17,6 +17,7 @@ import {
 } from '@material-ui/icons';
 import {green, blueGrey, red, pink, indigo} from '@material-ui/core/colors';
 import {Theme} from '@material-ui/core';
+import ListItem from '@material-ui/core/ListItem';
 
 function OrderListComponent({orders}: {orders: Order[]}) {
     const theme = useTheme<Theme>();
@@ -57,9 +58,15 @@ function OrderListComponent({orders}: {orders: Order[]}) {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {els.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
+                {els.length ? (
+                    els.slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                    )
+                ) : (
+                    <TableRow>
+                        <TableCell colSpan={5}> NO ORDERS FOUNDS</TableCell>
+                    </TableRow>
                 )}
             </TableBody>
             <TableFooter>
