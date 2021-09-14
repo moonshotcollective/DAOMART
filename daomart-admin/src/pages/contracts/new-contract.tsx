@@ -7,7 +7,7 @@ import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Title from '../../components/Title.component';
 import FormControl from '@material-ui/core/FormControl';
-import {Paper, Divider} from '@material-ui/core';
+import {Paper} from '@material-ui/core';
 import {GitcoinContext} from '../../store';
 import {deployProductContract} from '../../contracts';
 import {useGetTokenContracts} from '../../hooks/Contract.hook';
@@ -16,7 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import {Importer, ImporterField} from 'react-csv-importer';
 import Modal from '@material-ui/core/Modal';
 import 'react-csv-importer/dist/index.css';
-import {BigNumber, ethers} from 'ethers';
+import {ethers} from 'ethers';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import {green} from '@material-ui/core/colors';
 import {
@@ -31,10 +31,12 @@ import TableRow from '@material-ui/core/TableRow';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
+import {
+    FirstPage,
+    KeyboardArrowLeft,
+    KeyboardArrowRight,
+    LastPage,
+} from '@material-ui/icons';
 import {useTheme} from '@material-ui/styles';
 const initState = {
     name: '',
@@ -629,7 +631,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
                 disabled={page === 0}
                 aria-label="first page"
             >
-                <FirstPageIcon />
+                <FirstPage />
             </IconButton>
             <IconButton
                 onClick={handleBackButtonClick}
@@ -650,7 +652,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="last page"
             >
-                <LastPageIcon />
+                <LastPage />
             </IconButton>
         </div>
     );

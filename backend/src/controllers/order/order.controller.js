@@ -137,5 +137,6 @@ const parseOrders = (ddocs) => {
         user: d.user,
         item: d.item ? parseProducts([d.item])[0] : null,
         status: d.status,
+        created_at: d.created_at,
     }));
 };

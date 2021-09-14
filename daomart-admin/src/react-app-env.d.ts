@@ -60,6 +60,7 @@ type Order = {
     status: string;
     order_id: string;
     description?: string;
+    created_at?: string;
 };
 
 interface HttpLogSearchParams {
