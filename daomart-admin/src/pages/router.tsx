@@ -3,6 +3,7 @@ import {Route, Switch, Redirect} from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import CategoryContent from './categories';
 import NewCategoryContent from './categories/new-category';
+import CategoryPanelPage from './categories/category-panel';
 import ProductContent from './products';
 import NewProductContent from './products/new-product';
 import ProductPanelPage from './products/product-panel';
@@ -39,6 +40,11 @@ const RouterWrapper = () => {
                     path={'/categories/new'}
                     exact={true}
                     component={NewCategoryContent}
+                />{' '}
+                <Route
+                    path={'/categories/:cid'}
+                    exact={true}
+                    component={CategoryPanelPage}
                 />
                 <Route
                     path={'/products'}

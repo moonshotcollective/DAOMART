@@ -1,5 +1,4 @@
 const ProductCategory = require('./product-category.model');
-const Product = require('./product.model');
 
 const getCategories = ({keyword, skip, limit} = {}) => {
     return new Promise((resolve, reject) => {
@@ -37,12 +36,27 @@ const makeNewCategory = ({type, name, description, avatar, tags}) => {
             .catch(reject);
     });
 };
-
+const getById = ({cid}) => {
+    if (!cid) return Promise.reject('NOT_FOUND');
+    return __getCategoryById__({id: cid});
+};
 module.exports = {
     getCategories,
     makeNewCategory,
+    getById,
 };
 
+const __getCategoryById__ = ({id} = {}) => {
+    return new Promise((resolve, reject) => {
+        ProductCategory.findById(id)
+            .sort({created_at: -1})
+            .lean()
+            .then((ddoc) => {
+                resolve(parseProductCategories([ddoc])[0]);
+            })
+            .catch(reject);
+    });
+};
 const parseProductCategories = (ddocs) => {
     return ddocs.map((d) => ({
         category_id: d._id,

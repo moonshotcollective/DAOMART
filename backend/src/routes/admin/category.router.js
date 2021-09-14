@@ -33,5 +33,20 @@ router.post(
             });
     }
 );
+router.post(
+    '/cid',
+    passport.authenticate('jwt.admin', {session: false}),
+    (req, res, next) => {
+        const body = req.body || {};
+
+        ProductCategoryController.getById(body)
+            .then((result) => {
+                HttpModule.sendResponse(req, res, result);
+            })
+            .catch((err) => {
+                HttpModule.sendError(req, res, err);
+            });
+    }
+);
 
 module.exports = router;

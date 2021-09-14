@@ -35,11 +35,11 @@ router.post(
     }
 );
 
-router.get(
-    '/id/:pid',
+router.post(
+    '/pid',
     passport.authenticate('jwt.admin', {session: false}),
     (req, res, next) => {
-        const body = req.params || {};
+        const body = req.body || {};
         ProductController.getById(body)
             .then((result) => {
                 HttpModule.sendResponse(req, res, result);

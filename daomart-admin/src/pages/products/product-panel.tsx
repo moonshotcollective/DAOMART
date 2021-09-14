@@ -30,6 +30,7 @@ function ProductPanelPage() {
     const [product] = useGetProductById(state.token, pid, trigger);
     const [value, setValue] = React.useState(0);
 
+    console.log('product', product);
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
     };
@@ -94,13 +95,19 @@ const ProductTabContent = ({
         <TabPanel value={value} index={index}>
             <div style={{minHeight: 480}}>
                 <div style={{padding: 8}}>
-                    <Typography variant="overline" component={'h3'}>
+                    <Typography variant="overline" component={'h6'}>
                         {product?.product_id}
+                    </Typography>{' '}
+                    <Typography variant="overline" component={'h3'}>
+                        {product?.name}
                     </Typography>
                     <div>
                         <Typography variant="body1" component="span">
-                            <Link variant="overline" style={{paddingLeft: 8}}>
-                                {`(${product?.contract})`}
+                            <Link variant="overline">
+                                {`${product?.contract}`}
+                            </Link>{' '}
+                            <Link variant="overline">
+                                {`(#${product?.code})`}
                             </Link>
                         </Typography>
                     </div>{' '}

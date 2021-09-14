@@ -118,7 +118,7 @@ export const GetProducts = (token: string) =>
 export const GetProductById = (token: string, pid: any) =>
     axios({
         method: 'POST',
-        url: GetUrl('order/pid'),
+        url: GetUrl('product/pid'),
         data: {pid: pid},
         headers: {
             Authorization: 'Bearer ' + token,

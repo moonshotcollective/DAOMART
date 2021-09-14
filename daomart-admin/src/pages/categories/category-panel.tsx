@@ -17,8 +17,8 @@ function CategoryPanelPage() {
     const {state} = React.useContext(GitcoinContext);
     const [trigger, setTrigger] = React.useState(false);
 
-    const {pid} = useParams();
-    const [product] = useGetCategoryById(state.token, pid, trigger);
+    const {cid} = useParams();
+    const [product] = useGetCategoryById(state.token, cid, trigger);
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
