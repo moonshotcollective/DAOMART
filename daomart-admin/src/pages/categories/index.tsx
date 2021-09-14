@@ -9,21 +9,29 @@ import TextField from '@material-ui/core/TextField';
 import {useGetProductCategories} from '../../hooks/Product.hook';
 import {GitcoinContext} from '../../store';
 import {useTheme} from '@material-ui/core/styles';
+import {green, red, blue, pink, cyan} from '@material-ui/core/colors';
 import Avatar from '@material-ui/core/Avatar';
 import {useHistory} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import PhotoSizeSelectActualIcon from '@material-ui/icons/PhotoSizeSelectActual';
+import Pagination from '@material-ui/lab/Pagination';
 function CategoryContent() {
     const theme = useTheme();
     const {state} = React.useContext(GitcoinContext);
     const [keyword, setKeyword] = React.useState('');
+    const [perPage, setPerPage] = React.useState(5);
+    const [page, setPage] = React.useState(1);
     const [categories] = useGetProductCategories(state.token, {
         keyword: keyword,
     });
 
-    const els = categories.map((c) => (
-        <CategoryCard key={c.category_id} category={c} />
+    const els = categories.map((c, i) => (
+        <CategoryCard key={c.category_id} category={c} i={i} />
     ));
+    const onPagiChange = (event: React.ChangeEvent<unknown>, value: number) => {
+        console.log('value', value);
+        setPage(value);
+    };
 
     return (
         <Container maxWidth="lg" style={{marginTop: '5rem'}}>
@@ -57,13 +65,53 @@ function CategoryContent() {
                     </FormControl>
                 </form>
             </div>
-            <Paper style={{maxHeight: '70vh', overflow: 'auto'}}>
-                <List aria-label="main mailbox folders" style={{padding: 0}}>
-                    <ListItem button divider>
-                        NO CATEGORIES FOUNDS
-                    </ListItem>
-                    <div>{els}</div>
+            <Paper
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                }}
+            >
+                <List
+                    aria-label="main mailbox folders"
+                    style={{padding: 0, flex: 1}}
+                >
+                    {els.length ? (
+                        els.slice(
+                            (page - 1) * perPage,
+                            (page - 1) * perPage + perPage
+                        )
+                    ) : (
+                        <ListItem button divider>
+                            NO CATEGORIES FOUNDS
+                        </ListItem>
+                    )}
                 </List>
+                <div
+                    style={{
+                        width: '100%',
+                    }}
+                >
+                    <Pagination
+                        style={{
+                            width: '100%',
+                            marginTop: theme.spacing(2),
+                            marginBottom: theme.spacing(2),
+                            display: 'flex !important',
+                            justifyContent: 'center',
+                        }}
+                        showFirstButton
+                        showLastButton
+                        count={Math.ceil(els.length / perPage)}
+                        variant="outlined"
+                        color="standard"
+                        boundaryCount={2}
+                        siblingCount={2}
+                        page={page}
+                        defaultPage={1}
+                        onChange={onPagiChange}
+                        shape="rounded"
+                    />
+                </div>
             </Paper>
         </Container>
     );
@@ -71,7 +119,7 @@ function CategoryContent() {
 
 export default CategoryContent;
 
-const CategoryCard = ({category}) => {
+const CategoryCard = ({category, i}) => {
     const router = useHistory();
 
     const navigate = () => {
@@ -98,6 +146,7 @@ const CategoryCard = ({category}) => {
                         width: '7rem',
                         height: '7rem',
                         objectFit: 'contain',
+                        backgroundColor: colors[i % colors.length],
                     }}
                 >
                     {category.avatar ? null : (
@@ -106,7 +155,14 @@ const CategoryCard = ({category}) => {
                 </Avatar>
             </div>
 
-            <div style={{marginLeft: 8, height: '100%'}}>
+            <div
+                style={{
+                    marginLeft: 8,
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                }}
+            >
                 <Typography variant="overline" style={{lineHeight: '1rem'}}>
                     {category.category_id}
                 </Typography>
@@ -124,3 +180,11 @@ const CategoryCard = ({category}) => {
         </ListItem>
     );
 };
+
+const colors = [
+    red['A100'],
+    green['A100'],
+    blue['A100'],
+    cyan['A100'],
+    pink['A100'],
+];

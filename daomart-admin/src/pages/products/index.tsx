@@ -114,9 +114,6 @@ function ProductContent() {
                         defaultPage={1}
                         onChange={onPagiChange}
                         shape="rounded"
-                        // onRowsPerPageChange={
-                        //     onRowsPerChange
-                        // }
                     />
                 </div>
             </Paper>
