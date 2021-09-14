@@ -20,7 +20,7 @@ function UserContent() {
     const [users] = useSubToMembers(state.token);
 
     const els = users
-        ? users.map((c) => <UserCard key={c.user_id} user={c} />)
+        ? users.map((c, i) => <UserCard key={c.user_id + i} user={c} />)
         : [];
     console.log('users', users);
     return (

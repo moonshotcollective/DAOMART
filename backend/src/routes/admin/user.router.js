@@ -38,8 +38,38 @@ router.post(
     '/query',
     passport.authenticate('jwt.admin', {session: false}),
     (req, res, next) => {
-        const body = req.params || {};
+        const body = req.body || {};
         UserController.getUsersByQuery(body)
+            .then((result) => {
+                HttpModule.sendResponse(req, res, result);
+            })
+            .catch((err) => {
+                HttpModule.sendError(req, res, err);
+            });
+    }
+);
+
+router.post(
+    '/update-badge',
+    passport.authenticate('jwt.admin', {session: false}),
+    (req, res, next) => {
+        const body = req.body || {};
+        UserController.updateUserBadge(body)
+            .then((result) => {
+                HttpModule.sendResponse(req, res, result);
+            })
+            .catch((err) => {
+                HttpModule.sendError(req, res, err);
+            });
+    }
+);
+
+router.post(
+    '/update-status',
+    passport.authenticate('jwt.admin', {session: false}),
+    (req, res, next) => {
+        const body = req.body || {};
+        UserController.updateUserStatus(body)
             .then((result) => {
                 HttpModule.sendResponse(req, res, result);
             })

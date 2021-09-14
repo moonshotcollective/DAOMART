@@ -3,6 +3,7 @@ const Config = require('./config');
 const UserController = require('./src/controllers/user/user.controller');
 const {Server} = require('socket.io');
 
+let productLobby = {};
 const OPTIONS = {
     pingTimeout: 10 * 1000,
     pingInterval: 30 * 1000,
@@ -41,6 +42,11 @@ const Initiate = async (server) => {
             });
         });
 
+        socket.on('JOIN_PRODUCT_ROOM', ({pid}) => {
+            if (pid) {
+                productLobby;
+            }
+        });
         socket.on('disconnect', () => {
             UserController.getUserById(socket.user).then((doc) => {
                 socket.emit('ON_EXIT', {
@@ -67,6 +73,7 @@ const Initiate = async (server) => {
 const getLobby = () => {
     const arr = [];
     for (const [_, socket] of io.of('/').sockets) {
+        console.log('socket.user', socket.user);
         arr.push(socket.user);
     }
 

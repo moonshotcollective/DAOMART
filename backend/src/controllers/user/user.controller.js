@@ -1,6 +1,7 @@
 const User = require('./user.model');
 const Account = require('./account.model');
 const UserBadge = require('./user-badge.model');
+const UserStatus = require('./user-status.model');
 const {v4: uuidv4} = require('uuid');
 const jwt = require('jsonwebtoken');
 const Config = require('../../../config');
@@ -88,13 +89,24 @@ const IsSignedUp = ({address}) => {
             .catch(reject);
     });
 };
-const getUserById = ({user_id}) => {
+const getUserById = ({user_id} = {}) => {
+    if (!user_id) return reject('NOT_FOUND');
     return __getUserById__(user_id);
 };
 
 const getUsersById = (list = []) => {
     const l = [...new Set(list.map((i) => i.user_id.toString()))];
     return Promise.all(l.map((u) => __getUserById__(u)));
+};
+
+const updateUserBadge = ({uid, badge} = {}) => {
+    console.log('uid, badge', uid, badge);
+    if (!uid) return Promise.reject('NOT_FOUND');
+    return __updateUserBadgeById__({id: uid, badge: badge});
+};
+const updateUserStatus = ({uid, status} = {}) => {
+    if (!uid) return Promise.reject('NOT_FOUND');
+    return __updateUserStatusById__({id: uid, status: status});
 };
 
 module.exports = {
@@ -106,7 +118,94 @@ module.exports = {
     IsSignedUp,
     getUserById,
     getUsersById,
+    updateUserBadge,
+    updateUserStatus,
 };
+
+const __updateUserBadgeById__ = ({id, badge} = {}) => {
+    return new Promise((resolve, reject) => {
+        User.findById(id)
+            .then((updateDoc) => {
+                if (updateDoc) {
+                    __newbadge__(updateDoc, badge)
+                        .then((badgeDoc) => {
+                            updateDoc.set({
+                                badge: badgeDoc.badge,
+                            });
+                            updateDoc
+                                .save()
+                                .then((ddoc) => {
+                                    resolve(ddoc);
+                                })
+                                .catch(reject);
+                        })
+                        .catch(reject);
+                } else {
+                    reject('NOT_FOUND');
+                }
+            })
+            .catch(reject);
+    });
+};
+const __newbadge__ = (userDoc, badge) => {
+    return new Promise((resolve, reject) => {
+        const newwBadge = new UserBadge({
+            badge: badge || 'pleb',
+            prevBadge: userDoc.badge || 'ERROR',
+            user: userDoc._id,
+        });
+        newwBadge.save((err, badgeDoc) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(badgeDoc);
+            }
+        });
+    });
+};
+
+const __updateUserStatusById__ = ({id, status} = {}) => {
+    return new Promise((resolve, reject) => {
+        User.findById(id)
+            .then((updateDoc) => {
+                if (updateDoc) {
+                    __newstatus__(updateDoc, status)
+                        .then((statusDoc) => {
+                            updateDoc.set({
+                                status: statusDoc.status,
+                            });
+                            updateDoc
+                                .save()
+                                .then((ddoc) => {
+                                    resolve(ddoc);
+                                })
+                                .catch(reject);
+                        })
+                        .catch(reject);
+                } else {
+                    reject('NOT_FOUND');
+                }
+            })
+            .catch(reject);
+    });
+};
+const __newstatus__ = (userDoc, status) => {
+    return new Promise((resolve, reject) => {
+        const newwStatus = new UserStatus({
+            status: status || 'not-verified',
+            prevStatus: userDoc.status,
+            user: userDoc._id,
+        });
+        newwStatus.save((err, statusDoc) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(statusDoc);
+            }
+        });
+    });
+};
+
 const __findUserByQuery__ = ({account}) => {
     return new Promise((resolve, reject) => {
         if (!account) {

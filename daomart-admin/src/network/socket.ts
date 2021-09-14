@@ -102,12 +102,20 @@ const useSubToMembers = (token): [any[], boolean, any] => {
 
         GetLobby(token)
             .then((result) => {
-                setloading(false);
-                setmembers(result.data.result);
+                if (result.data.success) {
+                    setloading(false);
+                    setmembers(result.data.data);
+                } else {
+                    console.log('result.data', result.data);
+                    setloading(false);
+                    seterr('UNKNOW ERROR');
+                }
             })
             .catch((err) => {
                 setloading(false);
                 setmembers([]);
+                seterr(err);
+                console.log('err', err);
             });
 
         if (mainSocket) {

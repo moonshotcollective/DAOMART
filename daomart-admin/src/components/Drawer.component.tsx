@@ -111,6 +111,9 @@ const DrawerComponent = ({}) => {
             <Divider />
             <div style={{width: '100%', position: 'relative'}}>
                 <List>
+                    <LobbyListItems />
+                </List>
+                <List>
                     <MainListItems />
                 </List>
                 <Divider />
@@ -128,6 +131,26 @@ const DrawerComponent = ({}) => {
 
 export {DrawerComponent};
 
+const LobbyListItems = () => {
+    const router = useHistory();
+
+    const navigate = (path) => {
+        router.push(path);
+    };
+    return (
+        <div style={{position: 'relative'}}>
+            <ListSubheader inset style={{top: '4rem'}}>
+                Shop Management
+            </ListSubheader>
+            <ListItem button onClick={() => navigate('/')}>
+                <ListItemIcon>
+                    <PeopleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Lobby" />
+            </ListItem>
+        </div>
+    );
+};
 const MainListItems = () => {
     const router = useHistory();
 

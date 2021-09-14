@@ -65,6 +65,32 @@ export const GetUserById = (token: string, data?: {uid?: string}) =>
             'Content-Type': 'application/json',
         },
     });
+export const UpdateUserBadge = (
+    token: string,
+    {uid, badge}: {uid: string; badge: string}
+) =>
+    axios({
+        method: 'POST',
+        url: GetUrl('user/update-badge'),
+        data: {uid, badge},
+        headers: {
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+        },
+    });
+export const UpdateUserStatus = (
+    token: string,
+    {uid, status}: {uid: string; status: string}
+) =>
+    axios({
+        method: 'POST',
+        url: GetUrl('user/update-status'),
+        data: {uid, status},
+        headers: {
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+        },
+    });
 export const GetHttpLogs = (
     token: string,
     data?: {

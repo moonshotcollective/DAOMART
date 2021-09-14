@@ -23,13 +23,25 @@ import TableRow from '@material-ui/core/TableRow';
 import {NetworkLogComponent} from '../../components/NetworkLog.component';
 import {useGetHttpLogs} from '../../hooks/Log.hook';
 import {useGetOrdersByUser} from '../../hooks/Order.hook';
+import PeopleIcon from '@material-ui/icons/People';
+import {
+    blue,
+    red,
+    orange,
+    pink,
+    blueGrey,
+    green,
+    deepPurple,
+} from '@material-ui/core/colors';
+import {UpdateUserBadge, UpdateUserStatus} from '../../network/api';
 function UserContent() {
     const {state} = React.useContext(GitcoinContext);
 
     const {uid} = useParams();
-    const [user] = useGetUserById(state.token, uid);
+    const [trigger, setTrigger] = React.useState(false);
+    const [user] = useGetUserById(state.token, uid, trigger);
     const [value, setValue] = React.useState(0);
-    console.log('user', user);
+
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
     };
@@ -50,7 +62,13 @@ function UserContent() {
                     <Tab label="ACTIONS" {...a11yProps(5)} />
                 </Tabs>
             </AppBar>
-            <UserTabContent value={value} index={0} user={user} />
+            <UserTabContent
+                value={value}
+                index={0}
+                user={user}
+                token={state.token}
+                onTrigger={() => setTrigger(!trigger)}
+            />
             <ActivityTabContent value={value} index={1} user={user} />
             <ActiveOrderTabContent value={value} index={2} user={user} />
             <OrderTabContent
@@ -76,30 +94,71 @@ const UserTabContent = ({
     value,
     index,
     user,
+    token,
+    onTrigger,
 }: {
     value: number;
     index: number;
     user: User | null;
+    token: string;
+    onTrigger: () => void;
 }) => {
     const accounts = user ? [user.address] : [];
     return (
         <TabPanel value={value} index={index}>
             <div style={{minHeight: 480}}>
-                <div style={{padding: 8}}>
-                    <Typography variant="overline" component={'h3'}>
-                        {user?.user_id}
-                    </Typography>
-                    <div>
-                        <Typography variant="body1" component="span">
-                            {user?.name}
-                            <Link variant="overline" style={{paddingLeft: 8}}>
-                                {`(${user?.address})`}
-                            </Link>
-                        </Typography>
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                    <div style={{padding: 8}}>
+                        <div style={{width: '7rem'}}>
+                            <Avatar
+                                variant="rounded"
+                                alt={'user'}
+                                src={user?.avatar}
+                                style={{
+                                    width: '7rem',
+                                    height: '7rem',
+                                    objectFit: 'contain',
+                                }}
+                            >
+                                {user?.avatar ? null : (
+                                    <PeopleIcon fontSize="large" />
+                                )}
+                            </Avatar>
+                        </div>
                     </div>
-                    <div>
-                        <MyChip label={user?.status} />
-                        <MyChip label={user?.badge} />
+                    <div style={{flex: 1, padding: 8}}>
+                        <Typography variant="overline" component={'h3'}>
+                            {user?.user_id}
+                        </Typography>
+                        <div>
+                            <Typography variant="body1" component="span">
+                                {user?.name}
+                                <Link
+                                    variant="overline"
+                                    style={{paddingLeft: 8}}
+                                >
+                                    {`(${user?.address})`}
+                                </Link>
+                            </Typography>
+                        </div>
+                        <div>
+                            <MyChip label={user?.status} color="primary" />
+                            <MyChip label={user?.badge} color="secondary" />
+                        </div>
+                        <UserBadgeComponent
+                            user={user}
+                            token={token}
+                            onTrigger={onTrigger}
+                        />
+
+                        <Divider />
+                        <UserStatusComponent
+                            user={user}
+                            token={token}
+                            onTrigger={onTrigger}
+                        />
+
+                        <Divider />
                     </div>
                 </div>
 
@@ -131,6 +190,191 @@ const UserTabContent = ({
                 </div>
             </div>
         </TabPanel>
+    );
+};
+
+const UserBadgeComponent = ({
+    token,
+    user,
+    onTrigger,
+}: {
+    token: string;
+    user: User | null;
+    onTrigger: () => void;
+}) => {
+    const onBadgeChange = (badge: string) => {
+        console.log('badge', badge);
+        if (user && user.badge !== badge) {
+            UpdateUserBadge(token, {uid: user.user_id, badge: badge})
+                .then((result) => {
+                    onTrigger();
+                })
+                .catch((err) => {
+                    console.log('err', err);
+                });
+        } else {
+            console.log('err');
+        }
+    };
+    return (
+        <div
+            style={{display: 'flex', flexDirection: 'column', margin: '1rem 0'}}
+        >
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+                <Typography variant="overline" component={'h3'}>
+                    User Badge
+                </Typography>
+            </div>
+
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+                <BadgeComponent
+                    onBadgeChange={onBadgeChange}
+                    badge={'Pleb'}
+                    isActive={user && user.badge == 'Pleb'}
+                />
+                <BadgeComponent
+                    onBadgeChange={onBadgeChange}
+                    badge={'Steward'}
+                    isActive={user && user.badge == 'Steward'}
+                />
+                <BadgeComponent
+                    onBadgeChange={onBadgeChange}
+                    badge={'VIP'}
+                    isActive={user && user.badge == 'VIP'}
+                />
+                <BadgeComponent
+                    onBadgeChange={onBadgeChange}
+                    badge={'Admin'}
+                    isActive={user && user.badge == 'Admin'}
+                />
+            </div>
+        </div>
+    );
+};
+const UserStatusComponent = ({
+    token,
+    user,
+    onTrigger,
+}: {
+    token: string;
+    user: User | null;
+    onTrigger: () => void;
+}) => {
+    const onStatusChange = (status: string) => {
+        if (user && user.status != status) {
+            UpdateUserStatus(token, {uid: user.user_id, status: status})
+                .then((result) => {
+                    onTrigger();
+                })
+                .catch((err) => {
+                    console.log('err', err);
+                });
+        } else {
+            console.log('err');
+        }
+    };
+    return (
+        <div
+            style={{display: 'flex', flexDirection: 'column', margin: '1rem 0'}}
+        >
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+                <Typography variant="overline" component={'h3'}>
+                    User Status
+                </Typography>
+            </div>
+
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+                <StatusComponent
+                    onStatusChange={onStatusChange}
+                    status={'Banned'}
+                    isActive={user && user.status == 'Banned'}
+                />
+                <StatusComponent
+                    onStatusChange={onStatusChange}
+                    status={'Suspended'}
+                    isActive={user && user.status == 'Suspended'}
+                />
+                <StatusComponent
+                    onStatusChange={onStatusChange}
+                    status={'Not Verified'}
+                    isActive={user && user.status == 'Not Verified'}
+                />
+                <StatusComponent
+                    onStatusChange={onStatusChange}
+                    status={'Verified'}
+                    isActive={user && user.status == 'Verified'}
+                />
+            </div>
+        </div>
+    );
+};
+
+const badgeColors = {
+    Pleb: blueGrey['A400'],
+    Steward: orange[400],
+    VIP: pink[400],
+    Admin: deepPurple[400],
+};
+const statusColors = {
+    Banned: red[400],
+    Suspended: orange[400],
+    'Not Verified': blue[400],
+    Verified: green[400],
+};
+const BadgeComponent = ({
+    badge,
+    isActive,
+    onBadgeChange,
+}: {
+    badge: string;
+    isActive: boolean | null;
+    onBadgeChange: (badge: string) => void;
+}) => {
+    return (
+        <div
+            onClick={() => onBadgeChange(badge)}
+            style={{
+                cursor: 'pointer',
+                textAlign: 'center',
+                border: '1px solid grey',
+                width: '10rem',
+                padding: '0.5rem 1rem',
+                color: isActive ? 'white' : badgeColors[badge] || '#999',
+                backgroundColor: isActive
+                    ? badgeColors[badge] || 'transparent'
+                    : 'transparent',
+            }}
+        >
+            {badge}
+        </div>
+    );
+};
+const StatusComponent = ({
+    status,
+    isActive,
+    onStatusChange,
+}: {
+    status: string;
+    isActive: boolean | null;
+    onStatusChange: (status: string) => void;
+}) => {
+    return (
+        <div
+            onClick={() => onStatusChange(status)}
+            style={{
+                cursor: 'pointer',
+                textAlign: 'center',
+                border: '1px solid grey',
+                width: '10rem',
+                padding: '0.5rem 1rem',
+                color: isActive ? 'white' : statusColors[status] || '#999',
+                backgroundColor: isActive
+                    ? statusColors[status] || 'transparent'
+                    : 'transparent',
+            }}
+        >
+            {status}
+        </div>
     );
 };
 const ActivityTabContent = ({value, index, user}) => {
@@ -204,7 +448,6 @@ const ActiveOrderTabContent = ({value, index, user}) => {
 const OrderTabContent = ({value, index, user, token}) => {
     const [activeOrders] = useGetOrdersByUser(token, user?.user_id);
 
-    console.log('activeOrders', activeOrders);
     const els = activeOrders.map((c, i) => (
         <OrderCard key={c.order_id} order={c} />
     ));
@@ -346,6 +589,8 @@ const TabPanel = (props: TabPanelProps) => {
     );
 };
 
-const MyChip = ({label}: {label: string | undefined}) => {
-    return label ? <Chip label={label} style={{marginRight: 8}} /> : null;
+const MyChip = ({label, color}: {label: string | undefined; color: any}) => {
+    return label ? (
+        <Chip label={label} color={color} style={{marginRight: 8}} />
+    ) : null;
 };

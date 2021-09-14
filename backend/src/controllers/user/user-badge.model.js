@@ -6,12 +6,10 @@ const UserBadgeSchema = mongoose.Schema(
     {
         badge: {
             type: String,
-            enum: ['Admin', 'Steward', 'User'],
             required: true,
         },
-        action: {
+        prevBadge: {
             type: String,
-            enum: ['grant', 'revoke'],
             required: true,
         },
         user: {type: Schema.Types.ObjectId, ref: 'User', required: true},

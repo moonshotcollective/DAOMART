@@ -9,8 +9,8 @@ const UserSchema = mongoose.Schema(
             default: 'not-verified',
         },
         badge: {
-            type: [String],
-            default: ['pleb'],
+            type: String,
+            default: 'pleb',
         },
         account: {
             type: Schema.Types.ObjectId,

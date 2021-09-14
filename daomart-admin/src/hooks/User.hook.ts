@@ -36,7 +36,8 @@ const useGetUsers = (token: string): [User[], boolean, any] => {
 
 const useGetUserById = (
     token: string,
-    uid: string
+    uid: string,
+    trigger: boolean = false
 ): [User | null, boolean, any] => {
     const [user, setuser] = React.useState<User | null>(null);
     const [loading, setloading] = React.useState<boolean>(false);
@@ -69,7 +70,7 @@ const useGetUserById = (
                 seterr(err);
                 setuser(null);
             });
-    }, [token, uid]);
+    }, [token, trigger, uid]);
     return [user, loading, err];
 };
 
