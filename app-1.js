@@ -13,4 +13,5 @@ app.use(express.static(path.join(__dirname, 'daomart', 'build')));
 app.get('*', (req, res) =>
     res.sendFile(path.join(__dirname, 'daomart', 'build', 'index.html'))
 );
-app.listen(80);
+app.listen(4442);
+console.log('sserverstarted');
