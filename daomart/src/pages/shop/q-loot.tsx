@@ -149,7 +149,6 @@ const Shop = () => {
             </Container>
             <Container
                 style={{
-                  
                     display: 'flex',
                     flexDirection: 'row',
                     flexWrap: 'wrap',
