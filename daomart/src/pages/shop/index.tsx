@@ -8,16 +8,17 @@ import {GitcoinContext} from '../../store';
 import React from 'react';
 import {useHistory} from 'react-router-dom';
 import {useGetProducts} from '../../hooks/Shop.hook';
-
+import {QuadraticLootCard} from './q-loot.card';
 const Shop = () => {
     const {state, dispatch} = React.useContext(GitcoinContext);
 
     const [products] = useGetProducts(state.token);
-    console.log('products', products);
+
     return (
         <Container>
             <Container style={{padding: '1rem 0'}}>
-                <Carousel products={products} />
+                {/* <Carousel products={products} /> */}
+                <QuadraticLootCard />
             </Container>
 
             <Container style={{padding: '1rem 0'}}>
@@ -267,7 +268,9 @@ const ProductCard = ({item}) => {
 
                             margin: '0 1rem',
                         }}
-                        onClick={() => navigate('/shop/' + item.product_id)}
+                        onClick={() =>
+                            navigate('/shop/product/' + item.product_id)
+                        }
                     >
                         BUY
                     </Button>

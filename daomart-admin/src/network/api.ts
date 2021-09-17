@@ -1,6 +1,27 @@
 import GetUrl from './NETWORK_CONSTS';
 import axios from 'axios';
 
+export const GetQuadraticLootContracts = (token: string, data) =>
+    axios({
+        method: 'POST',
+        url: GetUrl('contract/quadratic-loot'),
+        data: data,
+        headers: {
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+        },
+    });
+
+export const MakeNewQuadraticLootContract = (token: string, data) =>
+    axios({
+        method: 'POST',
+        url: GetUrl('contract/quadratic-loot/new'),
+        data: data,
+        headers: {
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+        },
+    });
 export const GetTokenContracts = (token: string, data) =>
     axios({
         method: 'POST',
@@ -11,6 +32,7 @@ export const GetTokenContracts = (token: string, data) =>
             'Content-Type': 'application/json',
         },
     });
+
 export const MakeNewTokenContract = (token: string, data) =>
     axios({
         method: 'POST',

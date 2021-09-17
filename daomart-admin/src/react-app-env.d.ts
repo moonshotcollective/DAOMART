@@ -23,6 +23,10 @@ type TokenContract = {
     address: string;
     chain: string;
 };
+type QuadraticLootContract = {
+    address: string;
+    chain: string;
+};
 
 type ProductContract = {
     type: string;

@@ -264,6 +264,15 @@ const ContractListItems = () => {
                     <ReceiptIcon />
                 </ListItemIcon>
                 <ListItemText primary="Candy Contract" />
+            </ListItem>{' '}
+            <ListItem
+                button
+                onClick={() => navigate('/contracts/quadratic-loot')}
+            >
+                <ListItemIcon>
+                    <ReceiptIcon />
+                </ListItemIcon>
+                <ListItemText primary="QuadraticLoot Contract" />
             </ListItem>
             <ListSubheader inset>LOGS</ListSubheader>
             <ListItem button onClick={() => navigate('/http-logs')}>

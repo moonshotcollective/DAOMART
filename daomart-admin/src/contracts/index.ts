@@ -117,6 +117,57 @@ const deployCandyContract = (chainId: any): Promise<string> => {
     });
 };
 
+const deployQLootContract = (chainId: any): Promise<string> => {
+    console.log(`redeploying QLootContract on ${chainId}`);
+    return new Promise(async (resolve, reject) => {
+        try {
+            const provider = new ethers.providers.Web3Provider(
+                window.ethereum,
+                'any' // getNetworkName(chainId).toLocaleLowerCase()
+            );
+
+            let metadata: any = await getQuadtraicLootMeta();
+
+            console.log(`Deploying ${'QLootContract'}`);
+
+            let factory = new ethers.ContractFactory(
+                metadata.abi,
+                metadata.data.bytecode.object,
+                provider.getSigner()
+            );
+
+            const contract = await factory.deploy([]);
+            console.log('Contract Address: ', contract.address);
+            await contract.deployed();
+            console.log('Contract Deployed: ', contract.deployTransaction);
+            if (contract.deployTransaction) {
+                console.log(
+                    `gas limit ${
+                        BigNumber.from(
+                            contract.deployTransaction.gasLimit
+                        ).toNumber() / 1e9
+                    } at gas price ${
+                        BigNumber.from(
+                            contract.deployTransaction.gasPrice
+                        ).toNumber() / 1e9
+                    }`
+                );
+            }
+
+            resolve(contract.address);
+        } catch (e: any) {
+            if (e && e['reason']) {
+                reject(e['reason']);
+            } else if (e && e['message']) {
+                reject(e['message']);
+            } else {
+                console.log(e);
+                reject('ERROR [!]');
+            }
+        }
+    });
+};
+
 const getProductContractMeta = () => {
     let metadata: any = {};
 
@@ -137,9 +188,20 @@ const getCandyContractMeta = () => {
     }
     return metadata;
 };
+const getQuadtraicLootMeta = () => {
+    let metadata: any = {};
+
+    try {
+        metadata = require(`./qloot.json`);
+    } catch (e) {
+        console.log(e);
+    }
+    return metadata;
+};
 export {
     deployProductContract,
     deployCandyContract,
+    deployQLootContract,
     getProductContractMeta,
     getCandyContractMeta,
 };

@@ -21,10 +21,7 @@ const Pages = () => {
 
                     <StatusBarComponent />
                     <Navbar />
-                    <Box
-                        component="main"
-                        style={{height: '100vh', overflow: 'auto'}}
-                    >
+                    <Box component="main">
                         <Container maxWidth="lg" style={{marginTop: '1rem'}}>
                             {state.isAuth === 'NEED_AUTH' ? (
                                 <AuthRouter />

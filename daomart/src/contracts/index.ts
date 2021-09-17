@@ -137,9 +137,20 @@ const getCandyContractMeta = () => {
     }
     return metadata;
 };
+const getQuadtraicLootMeta = () => {
+    let metadata: any = {};
+
+    try {
+        metadata = require(`./qloot.json`);
+    } catch (e) {
+        console.log(e);
+    }
+    return metadata;
+};
 export {
     deployProductContract,
     deployCandyContract,
     getProductContractMeta,
     getCandyContractMeta,
+    getQuadtraicLootMeta,
 };

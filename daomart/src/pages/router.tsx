@@ -3,6 +3,7 @@ import {Route, Switch, Redirect} from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import ShopPage from './shop';
 import ProductPage from './shop/product';
+import QuadraticLootPage from './shop/q-loot';
 import AboutPage from './about';
 import ClaimPage from './claim/Claim.page';
 import SignIn from '../components/SignIn.component';
@@ -16,7 +17,11 @@ const RouterWrapper = () => {
         <Container style={{marginTop: '1em'}}>
             <Switch>
                 <Route path={'/'} exact={true} component={ShopPage} />
-                <Route path={'/shop/:pid'} component={ProductPage} />
+                <Route path={'/shop/product/:pid'} component={ProductPage} />
+                <Route
+                    path={'/shop/quadratic-loot'}
+                    component={QuadraticLootPage}
+                />
                 <Route path={'/claim'} exact={true} component={ClaimPage} />
                 <Route path={'/about'} exact={true} component={AboutPage} />
             </Switch>

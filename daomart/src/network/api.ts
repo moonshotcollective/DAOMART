@@ -21,6 +21,16 @@ export const GetCandyContract = (token?: string, data?: any) =>
             'Content-Type': 'application/json',
         },
     });
+export const GetQuadraticLootContract = (token?: string, data?: any) =>
+    axios({
+        method: 'POST',
+        url: GetUrl('contract/quadratic-loot'),
+        data: data,
+        headers: {
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+        },
+    });
 export const GetProducts = (token?: string) =>
     axios({
         method: 'GET',

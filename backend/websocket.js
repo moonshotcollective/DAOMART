@@ -44,7 +44,7 @@ const Initiate = async (server) => {
 
         socket.on('JOIN_PRODUCT_ROOM', ({pid}) => {
             if (pid) {
-                productLobby;
+                productLobby[pid] = (productLobby[pid] || 0) + 1;
             }
         });
         socket.on('disconnect', () => {
