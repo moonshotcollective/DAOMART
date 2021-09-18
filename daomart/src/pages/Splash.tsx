@@ -23,7 +23,7 @@ const Claim = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                height: '100%',
+                height: '100vh',
             }}
         >
             <Container
