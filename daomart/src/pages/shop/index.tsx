@@ -129,6 +129,7 @@ const ProductCard = ({item}) => {
                         variant={'h5'}
                         component="p"
                         style={{
+                            letterSpacing: 2,
                             fontSize: '2rem',
                             fontWeight: 400,
                             textShadow: '1px 1px 1px #999',
@@ -142,7 +143,7 @@ const ProductCard = ({item}) => {
                         style={{
                             fontSize: '0.75rem',
                             textShadow: '1px 1px 1px #999',
-                            color: '#e1e2e3',
+                            color: '#eaeaea',
                         }}
                     >
                         {`${item.category}`}
@@ -152,7 +153,7 @@ const ProductCard = ({item}) => {
                         style={{
                             fontSize: '0.75rem',
                             textShadow: '1px 1px 1px #999',
-                            color: '#e1e2e3',
+                            color: '#eaeaea',
                         }}
                     >
                         {`Release ${new Date().toLocaleDateString()}`}

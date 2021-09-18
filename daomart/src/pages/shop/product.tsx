@@ -307,441 +307,502 @@ const ProductPage = () => {
         return null;
     }
     return (
-        <Container
+        <div
             style={{
                 width: '100%',
                 display: 'flex',
-                flexDirection: 'row',
-                margin: '2rem 0',
-                height: '30rem',
+                flexDirection: 'column',
             }}
         >
             <Container
                 style={{
-                    width: '20rem',
+                    padding: '1rem 0',
+                    height: '40rem',
                     display: 'flex',
                     flexDirection: 'column',
-                    padding: 0,
-                    height: '30rem',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                 }}
             >
-                <div
-                    className="frame"
-                    style={{
-                        width: '100%',
-                        position: 'relative',
-                        height: '100%',
-                    }}
-                >
-                    {' '}
-                    <div
-                        className="frame-inner"
-                        style={{
-                            width: '100%',
-                            position: 'relative',
-                            height: '100%',
-                        }}
-                    >
-                        <Image
-                            src={product.avatar || DEFAUL_PHOTO}
-                            object-fit={'contain'}
-                            alt="DAOMART CLAIM REWARD"
-                            layout="fill"
-                            className="picture-frame"
-                        />
-                    </div>
-                </div>
-            </Container>
-            <Container
-                style={{
-                    flex: 1,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: '30rem',
-                }}
-            >
-                <Container
-                    style={{
-                        width: '100%',
-                        padding: 0,
-                    }}
-                >
-                    <Typography
-                        style={{
-                            fontFamily: 'AmericanCaptain',
-                            color: orange[300],
-                            fontSize: '2rem',
-                            textShadow: '1px 1px 3px black',
-                            margin: 4,
-                        }}
-                    >
-                        {`${product.category} (${product.type})`}
-                    </Typography>
-
-                    <Typography
-                        variant={'h3'}
-                        style={{
-                            fontFamily: 'Franchise',
-                            fontSize: '5rem',
-                            textShadow: '1px 1px 3px black',
-                        }}
-                    >
-                        {product.name}
-                    </Typography>
-                </Container>
                 <Typography
+                    variant="h2"
+                    component="h2"
                     style={{
-                        fontFamily: 'MarketDeco',
+                        fontWeight: 'bold',
+                        fontSize: '8rem',
+                        color: ' black',
                     }}
+                    align="center"
                 >
-                    {product.description || product.description.length < 10
-                        ? FAKE_DESC
-                        : product.description}
+                    image here
                 </Typography>
+            </Container>
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    padding: 8,
+                    width: '100%',
+                    backgroundColor: 'white',
+                }}
+            >
                 <Container
                     style={{
-                        width: '100%',
-                        padding: 0,
-                        marginTop: 32,
-                        marginBottom: 16,
+                        marginTop: '2rem',
+                        borderRadius: '1rem',
                         display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
+                        flexDirection: 'row',
+                        padding: 0,
+                        width: '100%',
+                        backgroundColor: '#62BDFF',
                     }}
                 >
-                    <Typography
-                        align="center"
-                        variant="body1"
-                        component="h3"
-                        style={{
-                            fontWeight: 'bold',
-                            width: '100%',
-                            borderBottom: '1px solid black',
-                            display: 'flex',
-                            flexDirection: 'column',
-                        }}
-                    >
-                        {` BUY IN FULL `}{' '}
-                        <span
-                            style={{fontSize: '0.75rem', color: '#757575'}}
-                        >{` CURRENT X IS ${currentX} AND MAX QUANTITY IS ${currentQuantity} WITH COEF OF ${
-                            Number(currentCoef || 0) / 1e3
-                        }`}</span>
-                    </Typography>
                     <Container
                         style={{
-                            width: '100%',
-                            padding: 0,
                             display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'center',
+                            flexDirection: 'column',
+                            justifyContent: 'flex-start',
+                            padding: 0,
+                            width: '30rem',
                         }}
                     >
                         <div
-                            onClick={() => buyWithEther()}
                             style={{
-                                flex: 1,
-                                border: '2px solid rgba(40,40,40,.75)',
-                                color: 'rgba(40,40,40,1)',
-                                borderRadius: 0,
-                                fontWeight: 'bolder',
+                                position: 'relative',
+                                height: '50vh',
+                                padding: '2rem 1rem',
+                            }}
+                        >
+                            <Image
+                                src={product.avatar || DEFAUL_PHOTO}
+                                object-fit={'contain'}
+                                alt="DAOMART CLAIM REWARD"
+                                layout="fill"
+                                style={{
+                                    width: '100%',
+                                    position: 'relative',
+                                    height: '100%',
+                                }}
+                            />
+                        </div>
 
-                                fontSize: '1.2rem',
+                        <Container
+                            style={{
+                                height: '6rem',
+                                padding: 0,
                                 display: 'flex',
                                 flexDirection: 'column',
-                                cursor: 'pointer',
                             }}
                         >
                             <Typography
                                 align="center"
+                                variant={'h5'}
+                                component="p"
                                 style={{
-                                    backgroundColor: '#ffb74d',
-                                    color: 'white',
-                                    fontWeight: 'bolder',
-                                }}
-                            >{` BUY with ETH `}</Typography>
-                            <div
-                                style={{
-                                    flex: 1,
-                                    display: 'flex',
-                                    flexDirection: 'row',
+                                    letterSpacing: 2,
+                                    fontSize: '4rem',
+                                    fontWeight: 400,
+                                    textShadow: '1px 1px 1px #999',
                                 }}
                             >
-                                <div
-                                    style={{
-                                        flex: 1,
-                                        color: 'white',
-
-                                        textShadow: '1px 1px 3px grey',
-                                        backgroundColor: 'lightseagreen',
-                                        padding: 8,
-                                        textAlign: 'center',
-                                    }}
-                                >
-                                    {etherPericeChangeLoading ? (
-                                        <CircularProgress
-                                            size={25}
-                                            color="secondary"
-                                        />
-                                    ) : (
-                                        `Ξ ${ethPrice}`
-                                    )}
-                                </div>
-                            </div>
-
-                            <div
+                                {product.name}
+                            </Typography>
+                            <Typography
+                                variant="subtitle1"
+                                align="center"
                                 style={{
-                                    flex: 1,
-                                    display: 'flex',
-                                    flexDirection: 'row',
+                                    fontSize: '1rem',
+                                    textShadow: '1px 1px 1px #999',
+                                    color: '#eaeaea',
                                 }}
                             >
-                                <div
-                                    style={{
-                                        flex: 1,
-                                        color: '#fff',
-                                        fontWeight: 'bold',
-                                        textShadow: '1px 2px 2px black',
-                                        backgroundColor: 'teal',
-                                        padding: 8,
-                                        borderTop: '1px solid white',
-                                        textAlign: 'center',
-                                    }}
-                                >
-                                    {buyEtherLoading ? (
-                                        <CircularProgress />
-                                    ) : (
-                                        `BUY!`
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            onClick={() => buyWithCandy()}
-                            style={{
-                                flex: 1,
-                                border: '2px solid rgba(40,40,40,.75)',
-                                color: 'rgba(40,40,40,1)',
-                                borderRadius: 0,
-                                fontWeight: 'bolder',
-
-                                fontSize: '1.2rem',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                cursor: 'pointer',
-                            }}
-                        >
+                                {`${product.category}`}
+                            </Typography>
                             <Typography
                                 align="center"
                                 style={{
-                                    backgroundColor: '#ffb74d',
-                                    color: 'white',
-                                    fontWeight: 'bolder',
-                                }}
-                            >{` BUY with CANDY`}</Typography>
-                            <div
-                                style={{
-                                    flex: 1,
-                                    display: 'flex',
-                                    flexDirection: 'row',
+                                    fontSize: '1rem',
+                                    textShadow: '1px 1px 1px #999',
+                                    color: '#eaeaea',
                                 }}
                             >
-                                <div
-                                    style={{
-                                        flex: 1,
-                                        color: 'white',
-
-                                        textShadow: '1px 1px 3px grey',
-                                        backgroundColor: 'hotpink',
-                                        padding: 8,
-                                        textAlign: 'center',
-                                    }}
-                                >
-                                    {candyPriceLoading ? (
-                                        <CircularProgress
-                                            size={25}
-                                            color="secondary"
-                                        />
-                                    ) : (
-                                        `🍬 ${candyPrice}`
-                                    )}
-                                </div>
-                            </div>
-                            <div
-                                style={{
-                                    flex: 1,
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                }}
-                            >
-                                <div
-                                    style={{
-                                        flex: 1,
-                                        color: '#fff',
-                                        fontWeight: 'bold',
-                                        textShadow: '1px 2px 2px black',
-                                        backgroundColor: 'crimson',
-                                        padding: 8,
-                                        borderTop: '1px solid white',
-                                        textAlign: 'center',
-                                    }}
-                                >
-                                    {buyCandyLoading ? (
-                                        <CircularProgress />
-                                    ) : (
-                                        `BUY!`
-                                    )}
-                                </div>
-                            </div>
-                        </div>
+                                {`Release ${new Date().toLocaleDateString()}`}
+                            </Typography>
+                        </Container>
                     </Container>
-
                     <Container
                         style={{
-                            width: '100%',
-                            padding: 0,
-                            marginTop: 32,
-                            marginBottom: 16,
+                            flex: 1,
                             display: 'flex',
                             flexDirection: 'column',
-                            justifyContent: 'center',
                         }}
                     >
-                        <Typography
-                            align="center"
-                            variant="body1"
-                            component="h3"
+                        <div
                             style={{
-                                fontWeight: 'bold',
-                                width: '100%',
-                                borderBottom: '1px solid black',
+                                marginTop: 64,
+                                padding: 8,
                                 display: 'flex',
                                 flexDirection: 'column',
                             }}
                         >
-                            {` BUY  BIT BY BIT `}
-                        </Typography>
-
-                        <div
+                            <Typography>Information</Typography>{' '}
+                            <Typography>
+                                {product.description ||
+                                product.description.length < 10
+                                    ? FAKE_DESC
+                                    : product.description}
+                            </Typography>
+                        </div>
+                        <Container
                             style={{
+                                width: '100%',
+                                padding: 0,
+                                marginTop: 32,
+                                marginBottom: 16,
                                 display: 'flex',
-                                flexDirection: 'row',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
                             }}
                         >
-                            <Input
+                            <Typography
+                                align="center"
+                                variant="body1"
+                                component="h3"
                                 style={{
-                                    flex: 1,
-                                    backgroundColor: '#ffb74d',
-                                    color: 'white',
-                                    padding: '0 1rem',
+                                    fontWeight: 'bold',
+                                    width: '100%',
+                                    borderBottom: '1px solid black',
+                                    display: 'flex',
+                                    flexDirection: 'column',
                                 }}
-                                value={amountBitByBit}
-                                onChange={(e) =>
-                                    Number(e.target.value) > 0
-                                        ? setamountBitByBit(
-                                              Number(e.target.value)
-                                          )
-                                        : ''
-                                }
-                            />
-
-                            <button
-                                style={{
-                                    textAlign: 'center',
-                                    padding: 12,
-                                    cursor: 'pointer',
-                                    border: '2px solid black',
-                                }}
-                                onClick={startPayBitByBit}
                             >
-                                {amountBitByBitLoading ||
-                                currentStreakLoading ? (
-                                    <CircularProgress
-                                        size={15}
-                                        color="secondary"
-                                    />
-                                ) : !currentStreakLoading &&
-                                  Number(currentStreak) > 0 ? (
-                                    'PAY A BIT'
-                                ) : (
-                                    ' START PAYING BIT BY BIT'
-                                )}
-                            </button>
-                        </div>
+                                {` BUY IN FULL `}{' '}
+                                <span
+                                    style={{
+                                        fontSize: '0.75rem',
+                                        color: '#757575',
+                                    }}
+                                >{` CURRENT X IS ${currentX} AND MAX QUANTITY IS ${currentQuantity} WITH COEF OF ${
+                                    Number(currentCoef || 0) / 1e3
+                                }`}</span>
+                            </Typography>
+                            <Container
+                                style={{
+                                    width: '100%',
+                                    padding: 0,
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <div
+                                    onClick={() => buyWithEther()}
+                                    style={{
+                                        flex: 1,
+                                        border: '2px solid rgba(40,40,40,.75)',
+                                        color: 'rgba(40,40,40,1)',
+                                        borderRadius: 0,
+                                        fontWeight: 'bolder',
 
-                        <div>
-                            <BitByBitInfoRow
-                                title="Interest for new amount added"
-                                value={
-                                    Number(interestForPaidAmount || 0) +
-                                    Number(interestForAmount || 0)
-                                }
-                                loading={
-                                    minMaxIntervalLoading ||
-                                    interestForPaidAmountLoading
-                                }
-                            />
-                            <BitByBitInfoRow
-                                title="Min Streak Inteval (block)"
-                                value={minMaxInterval?.min}
-                                subvalue={
-                                    lastPaidBlock &&
-                                    Number(lastPaidBlock) > 0 &&
-                                    minMaxInterval
-                                        ? Number(lastPaidBlock) +
-                                          minMaxInterval.min
-                                        : '---'
-                                }
-                                loading={minMaxIntervalLoading}
-                            />
-                            <BitByBitInfoRow
-                                title="Max Streak Inteval (block)"
-                                value={minMaxInterval?.max}
-                                subvalue={
-                                    lastPaidBlock &&
-                                    Number(lastPaidBlock) > 0 &&
-                                    minMaxInterval
-                                        ? Number(lastPaidBlock) +
-                                          minMaxInterval.max
-                                        : '---'
-                                }
-                                loading={minMaxIntervalLoading}
-                            />{' '}
-                            <BitByBitInfoRow
-                                title="Current Block Number "
-                                value={blockNumber}
-                                loading={blockNumberLoading}
-                            />
-                            <BitByBitInfoRow
-                                title="Last Paid Block:"
-                                value={lastPaidBlock}
-                                loading={lastPaidBlockLoading}
-                            />
-                            <BitByBitInfoRow
-                                title="Current Streak:"
-                                value={currentStreak}
-                                loading={currentStreakLoading}
-                            />
-                            <BitByBitInfoRow
-                                title="Amount Paid:"
-                                value={currentPaid}
-                                loading={currentPaidLoading}
-                            />
-                            <BitByBitInfoRow
-                                title="Interest Per Block for Amount Paid:"
-                                value={interestForPaidAmount}
-                                loading={interestForPaidAmountLoading}
-                            />
-                            <BitByBitInfoRow
-                                title=" Total Amount Paid (+Compounding Interst):"
-                                value={compoundingInterest}
-                                loading={compoundingInterestLoading}
-                            />
-                        </div>
+                                        fontSize: '1.2rem',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    <Typography
+                                        align="center"
+                                        style={{
+                                            backgroundColor: '#ffb74d',
+                                            color: 'white',
+                                            fontWeight: 'bolder',
+                                        }}
+                                    >{` BUY with ETH `}</Typography>
+                                    <div
+                                        style={{
+                                            flex: 1,
+                                            display: 'flex',
+                                            flexDirection: 'row',
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                flex: 1,
+                                                color: 'white',
+
+                                                textShadow: '1px 1px 3px grey',
+                                                backgroundColor:
+                                                    'lightseagreen',
+                                                padding: 8,
+                                                textAlign: 'center',
+                                            }}
+                                        >
+                                            {etherPericeChangeLoading ? (
+                                                <CircularProgress
+                                                    size={25}
+                                                    color="secondary"
+                                                />
+                                            ) : (
+                                                `Ξ ${ethPrice}`
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        style={{
+                                            flex: 1,
+                                            display: 'flex',
+                                            flexDirection: 'row',
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                flex: 1,
+                                                color: '#fff',
+                                                fontWeight: 'bold',
+                                                textShadow: '1px 2px 2px black',
+                                                backgroundColor: 'teal',
+                                                padding: 8,
+                                                borderTop: '1px solid white',
+                                                textAlign: 'center',
+                                            }}
+                                        >
+                                            {buyEtherLoading ? (
+                                                <CircularProgress />
+                                            ) : (
+                                                `BUY!`
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    onClick={() => buyWithCandy()}
+                                    style={{
+                                        flex: 1,
+                                        border: '2px solid rgba(40,40,40,.75)',
+                                        color: 'rgba(40,40,40,1)',
+                                        borderRadius: 0,
+                                        fontWeight: 'bolder',
+
+                                        fontSize: '1.2rem',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    <Typography
+                                        align="center"
+                                        style={{
+                                            backgroundColor: '#ffb74d',
+                                            color: 'white',
+                                            fontWeight: 'bolder',
+                                        }}
+                                    >{` BUY with CANDY`}</Typography>
+                                    <div
+                                        style={{
+                                            flex: 1,
+                                            display: 'flex',
+                                            flexDirection: 'row',
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                flex: 1,
+                                                color: 'white',
+
+                                                textShadow: '1px 1px 3px grey',
+                                                backgroundColor: 'hotpink',
+                                                padding: 8,
+                                                textAlign: 'center',
+                                            }}
+                                        >
+                                            {candyPriceLoading ? (
+                                                <CircularProgress
+                                                    size={25}
+                                                    color="secondary"
+                                                />
+                                            ) : (
+                                                `🍬 ${candyPrice}`
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div
+                                        style={{
+                                            flex: 1,
+                                            display: 'flex',
+                                            flexDirection: 'row',
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                flex: 1,
+                                                color: '#fff',
+                                                fontWeight: 'bold',
+                                                textShadow: '1px 2px 2px black',
+                                                backgroundColor: 'crimson',
+                                                padding: 8,
+                                                borderTop: '1px solid white',
+                                                textAlign: 'center',
+                                            }}
+                                        >
+                                            {buyCandyLoading ? (
+                                                <CircularProgress />
+                                            ) : (
+                                                `BUY!`
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </Container>
+
+                            <Container
+                                style={{
+                                    width: '100%',
+                                    padding: 0,
+                                    marginTop: 32,
+                                    marginBottom: 16,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <Typography
+                                    align="center"
+                                    variant="body1"
+                                    component="h3"
+                                    style={{
+                                        fontWeight: 'bold',
+                                        width: '100%',
+                                        borderBottom: '1px solid black',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                    }}
+                                >
+                                    {` BUY  BIT BY BIT `}
+                                </Typography>
+
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                    }}
+                                >
+                                    <Input
+                                        style={{
+                                            flex: 1,
+                                            backgroundColor: '#ffb74d',
+                                            color: 'white',
+                                            padding: '0 1rem',
+                                        }}
+                                        value={amountBitByBit}
+                                        onChange={(e) =>
+                                            Number(e.target.value) > 0
+                                                ? setamountBitByBit(
+                                                      Number(e.target.value)
+                                                  )
+                                                : ''
+                                        }
+                                    />
+
+                                    <button
+                                        style={{
+                                            textAlign: 'center',
+                                            padding: 12,
+                                            cursor: 'pointer',
+                                            border: '2px solid black',
+                                        }}
+                                        onClick={startPayBitByBit}
+                                    >
+                                        {amountBitByBitLoading ||
+                                        currentStreakLoading ? (
+                                            <CircularProgress
+                                                size={15}
+                                                color="secondary"
+                                            />
+                                        ) : !currentStreakLoading &&
+                                          Number(currentStreak) > 0 ? (
+                                            'PAY A BIT'
+                                        ) : (
+                                            ' START PAYING BIT BY BIT'
+                                        )}
+                                    </button>
+                                </div>
+
+                                <div>
+                                    <BitByBitInfoRow
+                                        title="Interest for new amount added"
+                                        value={
+                                            Number(interestForPaidAmount || 0) +
+                                            Number(interestForAmount || 0)
+                                        }
+                                        loading={
+                                            minMaxIntervalLoading ||
+                                            interestForPaidAmountLoading
+                                        }
+                                    />
+                                    <BitByBitInfoRow
+                                        title="Min Streak Inteval (block)"
+                                        value={minMaxInterval?.min}
+                                        subvalue={
+                                            lastPaidBlock &&
+                                            Number(lastPaidBlock) > 0 &&
+                                            minMaxInterval
+                                                ? Number(lastPaidBlock) +
+                                                  minMaxInterval.min
+                                                : '---'
+                                        }
+                                        loading={minMaxIntervalLoading}
+                                    />
+                                    <BitByBitInfoRow
+                                        title="Max Streak Inteval (block)"
+                                        value={minMaxInterval?.max}
+                                        subvalue={
+                                            lastPaidBlock &&
+                                            Number(lastPaidBlock) > 0 &&
+                                            minMaxInterval
+                                                ? Number(lastPaidBlock) +
+                                                  minMaxInterval.max
+                                                : '---'
+                                        }
+                                        loading={minMaxIntervalLoading}
+                                    />{' '}
+                                    <BitByBitInfoRow
+                                        title="Current Block Number "
+                                        value={blockNumber}
+                                        loading={blockNumberLoading}
+                                    />
+                                    <BitByBitInfoRow
+                                        title="Last Paid Block:"
+                                        value={lastPaidBlock}
+                                        loading={lastPaidBlockLoading}
+                                    />
+                                    <BitByBitInfoRow
+                                        title="Current Streak:"
+                                        value={currentStreak}
+                                        loading={currentStreakLoading}
+                                    />
+                                    <BitByBitInfoRow
+                                        title="Amount Paid:"
+                                        value={currentPaid}
+                                        loading={currentPaidLoading}
+                                    />
+                                    <BitByBitInfoRow
+                                        title="Interest Per Block for Amount Paid:"
+                                        value={interestForPaidAmount}
+                                        loading={interestForPaidAmountLoading}
+                                    />
+                                    <BitByBitInfoRow
+                                        title=" Total Amount Paid (+Compounding Interst):"
+                                        value={compoundingInterest}
+                                        loading={compoundingInterestLoading}
+                                    />
+                                </div>
+                            </Container>
+                        </Container>
                     </Container>
                 </Container>
-            </Container>
-        </Container>
+            </div>
+        </div>
     );
 };
 

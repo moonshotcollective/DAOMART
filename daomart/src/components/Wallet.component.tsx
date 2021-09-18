@@ -145,20 +145,24 @@ const WalletComponent = ({}) => {
                     ''
                 )}
             </div>
-            <div className="wallet-chip">
-                {candyBalanceLoading ? (
-                    <CircularProgress size="mini" />
-                ) : (
-                    <p>{`${
-                        state.candyBalance != null
-                            ? state.candyBalance
-                            : '-null-'
-                    } 🍬`}</p>
-                )}
-            </div>{' '}
-            <div className="wallet-chip">
-                <p> {state.wallets[0] ? `${balance} Ξ` : null}</p>
-            </div>
+            {state.wallets[0] ? (
+                <div className="wallet-chip">
+                    {candyBalanceLoading ? (
+                        <CircularProgress size="mini" />
+                    ) : (
+                        <p>{`${
+                            state.candyBalance != null
+                                ? state.candyBalance
+                                : '-null-'
+                        } 🍬`}</p>
+                    )}
+                </div>
+            ) : null}{' '}
+            {state.wallets[0] ? (
+                <div className="wallet-chip">
+                    <p> {`${balance} Ξ`}</p>
+                </div>
+            ) : null}
             {state.wallets[0] ? (
                 <div className="wallet-chip" onClick={onMetamaskConnect}>
                     <p> {minimizeAddress(state.wallets[0])}</p>
