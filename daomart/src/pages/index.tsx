@@ -3,9 +3,7 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
-import SignIn from '../components/SignIn.component';
 import StatusBarComponent from '../components/StatusBar.component';
-import Navbar from '../components/Navbar.component';
 import {GitcoinContext} from '../store';
 import {RouterWrapper, AuthRouter} from './router';
 import {useGetSocket} from '../network/socket';
@@ -14,25 +12,51 @@ const Pages = () => {
     const {state} = React.useContext(GitcoinContext);
     const socket = useGetSocket(state.token);
     return (
-        <Container maxWidth="xl">
-            <Box className="background">
+        <div
+            style={{
+                height: '100%',
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                margin: 0,
+                padding: 0,
+            }}
+            className="background"
+        >
+            <div
+                style={{
+                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    margin: 0,
+                    padding: 0,
+                }}
+            >
                 <Router>
                     <CssBaseline />
 
                     <StatusBarComponent />
-                    <Navbar />
-                    <Box component="main">
-                        <Container maxWidth="lg" style={{marginTop: '1rem'}}>
-                            {state.isAuth === 'NEED_AUTH' ? (
-                                <AuthRouter />
-                            ) : (
-                                <RouterWrapper />
-                            )}
-                        </Container>
-                    </Box>
+
+                    <div
+                        style={{
+                            marginTop: '1rem',
+                            flex: 1,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            margin: 0,
+                            padding: 0,
+                        }}
+                    >
+                        {state.isAuth === 'NEED_AUTH' ? (
+                            <AuthRouter />
+                        ) : (
+                            <RouterWrapper />
+                        )}
+                    </div>
                 </Router>
-            </Box>
-        </Container>
+            </div>
+        </div>
     );
 };
 

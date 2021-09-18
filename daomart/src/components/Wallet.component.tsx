@@ -131,122 +131,45 @@ const WalletComponent = ({}) => {
             style={{
                 display: 'flex',
                 flexDirection: 'row',
+                justifyContent: 'flex-end',
+                flex: 1,
             }}
         >
-            <div
-                style={{
-                    flex: 1,
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
-            >
-                <div
-                    style={{
-                        fontSize: '0.75rem',
-                        backgroundColor: 'white',
-                        color: '#232323',
-
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        border: '1px solid black',
-                        margin: '0 0.5rem',
-                        padding: '0.75rem',
-                    }}
-                >
-                    {candyBalanceLoading ? (
-                        <CircularProgress />
-                    ) : (
-                        <div>{`${
-                            state.candyBalance != null
-                                ? state.candyBalance
-                                : '-null-'
-                        } 🍬`}</div>
-                    )}
-                </div>{' '}
-                <div
-                    style={{
-                        fontSize: '0.75rem',
-                        backgroundColor: 'white',
-                        color: '#232323',
-
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        border: '1px solid black',
-                        margin: '0 0.5rem',
-                        padding: '0.75rem',
-                    }}
-                >
-                    {state.wallets[0] ? `${balance} Ξ` : null}
-                </div>
-                {state.wallets[0] ? (
-                    <div
-                        style={{
-                            margin: 0,
-                            border: '2px solid white',
-                            padding: 0,
-                            backgroundColor: 'transparent',
-                        }}
-                        onClick={onMetamaskConnect}
-                    >
-                        <div className="signin-address">
-                            <p> {minimizeAddress(state.wallets[0])}</p>
-                        </div>
-                    </div>
+            <div>
+                {' '}
+                {getNetworkName(state.chain_id) != 'Kovan' ? (
+                    <p style={{color: 'pink', margin: 0}}>
+                        {'\n WRONG NETWORK! SWITCH TO KOVAN'}
+                    </p>
                 ) : (
-                    <div
-                        style={{
-                            border: '2px solid white',
-                            backgroundColor: 'transparent',
-                            width: '100%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            fontWeight: 'bold',
-                            margin: '1rem 0',
-                            padding: '0.5rem',
-                        }}
-                        onClick={onMetamaskConnect}
-                        className="btn"
-                    >
-                        {'CONNECT'}
-                        <Image
-                            alt="wallet"
-                            src={MetamaskIcon}
-                            height="32"
-                            width="32"
-                        />
-                    </div>
+                    ''
                 )}
-                <div
-                    style={{
-                        fontSize: '0.75rem',
-                        backgroundColor: 'white',
-                        color: '#232323',
-
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        border: '1px solid black',
-                        margin: '0 0.5rem',
-                        padding: '0.75rem',
-                    }}
-                >
-                    {getNetworkName(state.chain_id)}
-                    {getNetworkName(state.chain_id) != 'Kovan' ? (
-                        <p style={{color: 'crimson'}}>
-                            {'\n WRONG NETWORK! SWITCH TO KOVAN'}
-                        </p>
-                    ) : (
-                        ''
-                    )}
+            </div>
+            <div className="wallet-chip">
+                {candyBalanceLoading ? (
+                    <CircularProgress size="mini" />
+                ) : (
+                    <p>{`${
+                        state.candyBalance != null
+                            ? state.candyBalance
+                            : '-null-'
+                    } 🍬`}</p>
+                )}
+            </div>{' '}
+            <div className="wallet-chip">
+                <p> {state.wallets[0] ? `${balance} Ξ` : null}</p>
+            </div>
+            {state.wallets[0] ? (
+                <div className="wallet-chip" onClick={onMetamaskConnect}>
+                    <p> {minimizeAddress(state.wallets[0])}</p>
                 </div>
+            ) : (
+                <div className="wallet-chip" onClick={onMetamaskConnect}>
+                    <p> {'CONNECT'} </p>
+                </div>
+            )}
+            <div className="wallet-chip">
+                <p> {getNetworkName(state.chain_id)} </p>
             </div>
         </div>
     );

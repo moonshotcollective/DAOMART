@@ -24,7 +24,7 @@ const Pages = () => {
         );
     }
     return (
-        <Box sx={{display: 'flex', height: '100vh'}}>
+        <Box sx={{display: 'flex', height: '100vh', padding: 0}}>
             <Router>
                 <CssBaseline />
 

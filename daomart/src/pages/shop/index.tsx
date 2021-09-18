@@ -1,4 +1,3 @@
-import Carousel from '../../components/carousel';
 import Container from '@material-ui/core/Container';
 import {blueGrey, deepOrange, orange} from '@material-ui/core/colors';
 import {Button} from '@material-ui/core';
@@ -8,166 +7,60 @@ import {GitcoinContext} from '../../store';
 import React from 'react';
 import {useHistory} from 'react-router-dom';
 import {useGetProducts} from '../../hooks/Shop.hook';
-import {QuadraticLootCard} from './q-loot.card';
+
 const Shop = () => {
     const {state, dispatch} = React.useContext(GitcoinContext);
-
     const [products] = useGetProducts(state.token);
 
     return (
-        <Container>
-            <Container style={{padding: '1rem 0'}}>
-                {/* <Carousel products={products} /> */}
-                <QuadraticLootCard />
-            </Container>
-
-            <Container style={{padding: '1rem 0'}}>
-                <div
-                    style={{
-                        margin: '2rem 0',
-                        width: '100%',
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'space-around',
-                    }}
-                >
-                    <div
-                        style={{
-                            width: '15rem',
-                            height: '15rem',
-                            position: 'relative',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <p
-                            style={{
-                                fontFamily: 'AmericanCaptain',
-                                color: blueGrey[200],
-                                fontSize: '5rem',
-                                textShadow: '3px 1px 5px black',
-                            }}
-                        >
-                            KUDOS
-                        </p>
-                        <div
-                            style={{
-                                position: 'absolute',
-                                top: 0,
-                                left: 0,
-                                width: '100%',
-                                height: '100%',
-                                border: '1rem solid ' + blueGrey[300],
-                                transform: 'rotate(45deg)',
-                                boxShadow: ' inset  0 0 8px 2px black',
-                            }}
-                        ></div>
-                    </div>
-                    <div
-                        style={{
-                            width: '15rem',
-                            height: '15rem',
-                            position: 'relative',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <p
-                            style={{
-                                fontFamily: 'AmericanCaptain',
-                                color: deepOrange[300],
-                                fontSize: '5rem',
-                                textShadow: '3px 1px 5px black',
-                            }}
-                        >
-                            {' '}
-                            MERCH
-                        </p>
-                        <div
-                            style={{
-                                position: 'absolute',
-                                top: 0,
-                                left: 0,
-                                width: '100%',
-                                height: '100%',
-                                border: '1rem solid ' + deepOrange.A100,
-                                transform: 'rotate(45deg)',
-                                boxShadow: ' inset  0 0 8px 2px black',
-                            }}
-                        ></div>
-                    </div>
-                    <div
-                        style={{
-                            width: '15rem',
-                            height: '15rem',
-                            position: 'relative',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <p
-                            style={{
-                                fontFamily: 'AmericanCaptain',
-                                color: orange[300],
-                                fontSize: '5rem',
-                                textShadow: '3px 1px 5px black',
-                            }}
-                        >
-                            NFT
-                        </p>
-                        <div
-                            style={{
-                                position: 'absolute',
-                                top: 0,
-                                left: 0,
-                                width: '100%',
-                                height: '100%',
-                                border: '1rem solid ' + orange.A200,
-                                transform: 'rotate(45deg)',
-                                boxShadow: ' inset  0 0 8px 2px black',
-                            }}
-                        ></div>
-                    </div>
-                </div>
-            </Container>
-
+        <div>
             <Container
                 style={{
                     padding: '1rem 0',
+                    height: '40rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
+                <Typography
+                    variant="h2"
+                    component="h2"
+                    style={{
+                        fontWeight: 'bold',
+                        fontSize: '8rem',
+                        color: ' black',
+                    }}
+                    align="center"
+                >
+                    image here
+                </Typography>
+            </Container>
+
+            <div
+                style={{
+                    padding: '3rem 0',
                     display: 'flex',
                     flexDirection: 'row',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    margin: '2rem 0 ',
+                    marginTop: '2rem',
                     flexWrap: 'wrap',
+                    backgroundColor: 'white',
                 }}
             >
                 {(products || []).map((p) => (
                     <ProductCard item={p} key={p.product_id} />
                 ))}
-            </Container>
-        </Container>
+            </div>
+        </div>
     );
 };
 
 export default Shop;
 
 const ProductCard = ({item}) => {
-    const c = [
-        deepOrange[300],
-        blueGrey[200],
-        orange[500],
-        blueGrey[700],
-        orange.A400,
-        deepOrange.A400,
-    ][Math.floor(Math.random() * 3)];
-
     const router = useHistory();
 
     const navigate = (path) => {
@@ -177,14 +70,20 @@ const ProductCard = ({item}) => {
         <div
             style={{
                 display: 'flex',
-                flexDirection: 'row',
-                margin: ' 0.5rem ',
-                border: '1px solid black',
+                flexDirection: 'column',
+                margin: '1rem ',
+                boxShadow: '1px 1px 10px 0 #467394',
+                height: '24rem',
+                width: '19.5rem',
+                backgroundColor: '#62BDFF',
+                borderRadius: '1rem',
+                cursor: 'pointer',
             }}
+            onClick={() => navigate('/shop/product/' + item.product_id)}
         >
             <Container
                 style={{
-                    width: '20rem',
+                    flex: 1,
                     display: 'flex',
                     flexDirection: 'column',
                     padding: 0,
@@ -195,19 +94,16 @@ const ProductCard = ({item}) => {
                         width: '100%',
                         display: 'flex',
                         flexDirection: 'column',
-                        borderBottom: '1px solid black',
-                        height: '10rem',
+                        justifyContent: 'center',
+                        flex: 1,
                         margin: 0,
-                        backgroundColor: c,
+                        padding: '1rem 2rem 0',
                     }}
                 >
                     <div
                         style={{
                             width: '100%',
                             position: 'relative',
-                            height: '100%',
-
-                            padding: 8,
                         }}
                         className="img-container"
                     >
@@ -222,58 +118,45 @@ const ProductCard = ({item}) => {
 
                 <Container
                     style={{
-                        width: '100%',
+                        height: '6rem',
                         padding: 0,
-                        margin: '1rem 0',
                         display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'center',
+                        flexDirection: 'column',
                     }}
                 >
-                    <Container
+                    <Typography
+                        align="center"
+                        variant={'h5'}
+                        component="p"
                         style={{
-                            padding: 8,
+                            fontSize: '2rem',
+                            fontWeight: 400,
+                            textShadow: '1px 1px 1px #999',
                         }}
                     >
-                        <Typography
-                            variant={'h6'}
-                            style={{
-                                fontFamily: 'Roboto',
-                                textShadow: '1px 1px 3px black',
-                                fontWeight: 'bold',
-                            }}
-                        >
-                            {item.name}
-                        </Typography>
-                        <Typography
-                            style={{
-                                fontFamily: 'Roboto',
-                                fontSize: '0.75rem',
-                                textShadow: '1px 1px 3px black',
-                            }}
-                        >
-                            {`${item.category} (${item.type})`}
-                        </Typography>
-                    </Container>
-                    <Button
+                        {item.name}
+                    </Typography>
+                    <Typography
+                        variant="subtitle1"
+                        align="center"
                         style={{
-                            alignSelf: 'flex-end',
-
-                            border: '2px solid rgba(40,40,40,.75)',
-                            color: 'rgba(40,40,40,1)',
-                            borderRadius: 0,
-                            fontWeight: 'bolder',
-                            fontFamily: 'Bazar',
-                            fontSize: '1rem',
-
-                            margin: '0 1rem',
+                            fontSize: '0.75rem',
+                            textShadow: '1px 1px 1px #999',
+                            color: '#e1e2e3',
                         }}
-                        onClick={() =>
-                            navigate('/shop/product/' + item.product_id)
-                        }
                     >
-                        BUY
-                    </Button>
+                        {`${item.category}`}
+                    </Typography>
+                    <Typography
+                        align="center"
+                        style={{
+                            fontSize: '0.75rem',
+                            textShadow: '1px 1px 1px #999',
+                            color: '#e1e2e3',
+                        }}
+                    >
+                        {`Release ${new Date().toLocaleDateString()}`}
+                    </Typography>
                 </Container>
             </Container>
         </div>

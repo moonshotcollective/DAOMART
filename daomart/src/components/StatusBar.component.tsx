@@ -7,62 +7,18 @@ import MoonshotBotIcon from '../assets/images/bot00.png';
 import WalletComponent from './Wallet.component';
 import Container from '@material-ui/core/Container';
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        container: {
-            backgroundColor: 'transparent',
-            boxShadow: 'none',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-        },
-        bigtitle: {
-            fontWeight: 'bold',
-            fontFamily: 'Bazar',
-        },
-    })
-);
 const Statusbar = ({}) => {
-    const styles = useStyles();
     return (
-        <AppBar position="static" className={styles.container}>
-            <Toolbar
-                variant="dense"
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    flex: 1,
-                    marginLeft: '10rem',
-                }}
-            >
-                <a href="/">
-                    <Image
-                        src={MoonshotBotIcon}
-                        alt="Daomart logo"
-                        width={100}
-                        height={100}
-                    />
-                </a>
-                <a href="/">
-                    <Typography
-                        variant="h1"
-                        color="textPrimary"
-                        className={styles.bigtitle}
-                    >
-                        DAOMART
-                    </Typography>
-                </a>
-            </Toolbar>
-            <Container
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
-            >
-                <WalletComponent />
-            </Container>
-        </AppBar>
+        <Container
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: 8,
+            }}
+        >
+            <WalletComponent />
+        </Container>
     );
 };
 
