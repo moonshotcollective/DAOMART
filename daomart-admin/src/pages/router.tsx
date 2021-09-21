@@ -18,7 +18,8 @@ import UserContent from './users';
 import UserPanelPage from './users/user-panel.page';
 //
 import ContractContent from './contracts';
-import NewContractContent from './contracts/new-contract';
+import NewContractContent from './contracts/product/new-contract';
+import ProductContractPanel from './contracts/product/product-contract-panel';
 import CandyContractContent from './contracts/candy';
 import NewCandyContractContent from './contracts/new-candy';
 import QuadraticLootContractContent from './contracts/quadratic-loot/quadratic-loot';
@@ -91,6 +92,11 @@ const RouterWrapper = () => {
                     path={'/contracts/product/new'}
                     exact
                     component={NewContractContent}
+                />{' '}
+                <Route
+                    path={'/contracts/product/panel/:cid'}
+                    exact
+                    component={ProductContractPanel}
                 />
                 <Route
                     path={'/contracts/candy'}

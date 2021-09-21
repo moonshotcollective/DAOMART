@@ -13,13 +13,8 @@ const deployProductContract = (
                 'any' // getNetworkName(chainId).toLocaleLowerCase()
             );
 
-            let metadata: any = {};
+            let metadata: any = await getProductContractMeta();
 
-            try {
-                metadata = require(`./daomart.json`);
-            } catch (e) {
-                console.log(e);
-            }
             console.log('options', options);
             console.log(`Deploying ${'NEW DAOMART PRODUCT '} : \n ${options}`);
 
@@ -69,13 +64,7 @@ const deployCandyContract = (chainId: any): Promise<string> => {
                 'any' // getNetworkName(chainId).toLocaleLowerCase()
             );
 
-            let metadata: any = {};
-
-            try {
-                metadata = require(`./candy.json`);
-            } catch (e) {
-                console.log(e);
-            }
+            let metadata: any = await getCandyContractMeta();
 
             console.log(`Deploying ${'Candy'}`);
 
@@ -172,7 +161,7 @@ const getProductContractMeta = () => {
     let metadata: any = {};
 
     try {
-        metadata = require(`./daomart.json`);
+        metadata = require(`./daomart-jar.json`);
     } catch (e) {
         console.log(e);
     }

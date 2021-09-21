@@ -6,7 +6,20 @@ const {
 } = require('../../controllers');
 const {HttpModule} = require('../../modules');
 const router = express.Router();
-
+router.post(
+    '/candy',
+    passport.authenticate('jwt.admin', {session: false}),
+    (req, res, next) => {
+        const body = req.body || {};
+        ContractController.getTokenContracts(body)
+            .then((result) => {
+                HttpModule.sendResponse(req, res, result[0]);
+            })
+            .catch((err) => {
+                HttpModule.sendError(req, res, err);
+            });
+    }
+);
 router.post(
     '/token',
     passport.authenticate('jwt.admin', {session: false}),

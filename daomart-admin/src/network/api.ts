@@ -1,6 +1,16 @@
 import GetUrl from './NETWORK_CONSTS';
 import axios from 'axios';
 
+export const GetCandyContractMetadata = (token: string, data) =>
+    axios({
+        method: 'POST',
+        url: GetUrl('contract/candy'),
+        data: data,
+        headers: {
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+        },
+    });
 export const GetQuadraticLootContracts = (token: string, data) =>
     axios({
         method: 'POST',

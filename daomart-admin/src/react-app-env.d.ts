@@ -78,3 +78,12 @@ interface OrderSearchParams {
     item?: string;
     keyword?: string;
 }
+
+type ProductContractItemRow = {
+    name: string;
+    quantity: number;
+    coefficient: number;
+    release: number | Date;
+    initialEthPrice: number;
+    initialCandyPrice: number;
+};

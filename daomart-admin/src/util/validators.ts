@@ -1,9 +1,10 @@
-const validateNaturalNumber = (num: any): number => {
+export const validateNaturalNumber = (num: any): number => {
     return num;
 };
 
-const validateNaturalNumberWithDecimals = (num: any): number => {
+export const validateNaturalNumberWithDecimals = (num: any): number => {
     return num;
 };
-
-export {validateNaturalNumber, validateNaturalNumberWithDecimals};
+export const validateDateTime = (num: any): Date => {
+    return new Date(num || Date.now());
+};

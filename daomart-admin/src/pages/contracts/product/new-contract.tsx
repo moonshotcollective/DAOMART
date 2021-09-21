@@ -5,13 +5,13 @@ import {Button} from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Title from '../../components/Title.component';
+import Title from '../../../components/Title.component';
 import FormControl from '@material-ui/core/FormControl';
 import {Paper} from '@material-ui/core';
-import {GitcoinContext} from '../../store';
-import {deployProductContract} from '../../contracts';
-import {useGetTokenContracts} from '../../hooks/Contract.hook';
-import {MakeNewProductContract} from '../../network/api';
+import {GitcoinContext} from '../../../store';
+import {deployProductContract} from '../../../contracts';
+import {useGetTokenContracts} from '../../../hooks/Contract.hook';
+import {MakeNewProductContract} from '../../../network/api';
 import Typography from '@material-ui/core/Typography';
 import {Importer, ImporterField} from 'react-csv-importer';
 import Modal from '@material-ui/core/Modal';
@@ -22,7 +22,8 @@ import {green} from '@material-ui/core/colors';
 import {
     validateNaturalNumber,
     validateNaturalNumberWithDecimals,
-} from '../../util/validators';
+    validateDateTime,
+} from '../../../util/validators';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -38,14 +39,18 @@ import {
     LastPage,
 } from '@material-ui/icons';
 import {useTheme} from '@material-ui/styles';
+
 const initState = {
     name: '',
     items: [] as ProductContractItemRow[],
 };
 const initNewItemState = {
     name: '',
-    quantity: 0,
+    quantity: 100,
     coefficient: 1,
+    release: new Date(),
+    initialEthPrice: 0.05,
+    initialCandyPrice: 100,
 };
 
 const NewContractContent = () => {
@@ -102,6 +107,13 @@ const NewContractContent = () => {
             });
             return;
         }
+        if (!newContract.items.length) {
+            setSnackbarOpen({
+                type: 'error',
+                msg: 'Need atleast 1 item',
+            });
+            return;
+        }
         setLoading(true);
         try {
             deployProductContract(state.chain_id, [
@@ -112,6 +124,19 @@ const NewContractContent = () => {
                 ),
                 newContract.items.map((i) => i.quantity.toString()),
                 newContract.items.map((i) => (i.coefficient * 1e2).toString()),
+                newContract.items.map((i) =>
+                    Math.floor(new Date(i.release).getTime() / 1e3).toString()
+                ),
+                newContract.items.map((i) =>
+                    ethers.utils
+                        .parseEther(i.initialEthPrice.toString())
+                        .toString()
+                ),
+                newContract.items.map((i) =>
+                    ethers.utils
+                        .parseEther(i.initialCandyPrice.toString())
+                        .toString()
+                ),
             ])
                 .then((res) => {
                     console.log('deploy res', res);
@@ -208,6 +233,9 @@ const NewContractContent = () => {
                                     <TableCell>Name</TableCell>
                                     <TableCell>Item Quantity</TableCell>
                                     <TableCell>Coefficient% (*1e-3)</TableCell>
+                                    <TableCell>Release</TableCell>
+                                    <TableCell>Initial Eth Price</TableCell>
+                                    <TableCell>Initial Candy Price</TableCell>
                                     <TableCell>X</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -232,6 +260,17 @@ const NewContractContent = () => {
                                                     </TableCell>
                                                     <TableCell>
                                                         {item.coefficient}
+                                                    </TableCell>{' '}
+                                                    <TableCell>
+                                                        {new Date(
+                                                            item.release
+                                                        ).toLocaleString()}
+                                                    </TableCell>{' '}
+                                                    <TableCell>
+                                                        {item.initialEthPrice}
+                                                    </TableCell>{' '}
+                                                    <TableCell>
+                                                        {item.initialCandyPrice}
                                                     </TableCell>
                                                     <TableCell
                                                         onClick={() => {
@@ -312,7 +351,10 @@ const NewContractContent = () => {
                                     </TableCell>
                                     <TableCell style={{padding: 0}}>
                                         <TextField
-                                            style={{width: '100%'}}
+                                            style={{
+                                                width: '100%',
+                                                borderRight: '1px solid grey',
+                                            }}
                                             id="demo-simple-coefficient-outlined"
                                             required
                                             label="Coefficient"
@@ -322,6 +364,79 @@ const NewContractContent = () => {
                                                 setNewItem({
                                                     ...newItem,
                                                     coefficient:
+                                                        validateNaturalNumberWithDecimals(
+                                                            e.target.value
+                                                        ),
+                                                })
+                                            }
+                                        />
+                                    </TableCell>
+                                    <TableCell style={{padding: 0}}>
+                                        <TextField
+                                            type="datetime-local"
+                                            style={{
+                                                width: '100%',
+                                                borderRight: '1px solid grey',
+                                            }}
+                                            id="demo-simple-coefficient-outlined"
+                                            required
+                                            label="Release"
+                                            variant="filled"
+                                            value={newItem.release}
+                                            onChange={(e) => {
+                                                console.log(
+                                                    'e.target',
+                                                    e.target.value,
+                                                    validateDateTime(
+                                                        e.target.value
+                                                    ).toISOString()
+                                                );
+                                                setNewItem({
+                                                    ...newItem,
+                                                    release: validateDateTime(
+                                                        e.target.value
+                                                    ),
+                                                });
+                                            }}
+                                        />
+                                    </TableCell>
+                                    <TableCell style={{padding: 0}}>
+                                        <TextField
+                                            style={{
+                                                width: '100%',
+                                                borderRight: '1px solid grey',
+                                            }}
+                                            id="demo-simple-coefficient-outlined"
+                                            required
+                                            label="Initial Eth price"
+                                            variant="filled"
+                                            value={newItem.initialEthPrice}
+                                            onChange={(e) =>
+                                                setNewItem({
+                                                    ...newItem,
+                                                    initialEthPrice:
+                                                        validateNaturalNumberWithDecimals(
+                                                            e.target.value
+                                                        ),
+                                                })
+                                            }
+                                        />
+                                    </TableCell>{' '}
+                                    <TableCell style={{padding: 0}}>
+                                        <TextField
+                                            style={{
+                                                width: '100%',
+                                                borderRight: '1px solid grey',
+                                            }}
+                                            id="demo-simple-coefficient-outlined"
+                                            required
+                                            label="Initial Candy price"
+                                            variant="filled"
+                                            value={newItem.initialCandyPrice}
+                                            onChange={(e) =>
+                                                setNewItem({
+                                                    ...newItem,
+                                                    initialCandyPrice:
                                                         validateNaturalNumberWithDecimals(
                                                             e.target.value
                                                         ),
@@ -578,12 +693,6 @@ const CsvImporter = ({
             </div>
         </Modal>
     );
-};
-
-type ProductContractItemRow = {
-    name: string;
-    quantity: number;
-    coefficient: number;
 };
 
 interface TablePaginationActionsProps {

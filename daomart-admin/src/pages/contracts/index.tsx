@@ -14,6 +14,7 @@ import Title from '../../components/Title.component';
 import {Paper} from '@material-ui/core';
 import {GitcoinContext} from '../../store';
 import {useGetProductContracts} from '../../hooks/Contract.hook';
+import {useHistory} from 'react-router-dom';
 
 const ContractContent = () => {
     const {state, dispatch} = React.useContext(GitcoinContext);
@@ -24,6 +25,12 @@ const ContractContent = () => {
     const [productContracts] = useGetProductContracts(state.token, {
         chain: state.chain_id,
     });
+
+    const router = useHistory();
+
+    const navigate = (addr: string) => {
+        router.push(`/contracts/product/panel/${addr}`);
+    };
 
     return (
         <Container maxWidth="lg" style={{marginTop: '5rem'}}>
@@ -42,7 +49,11 @@ const ContractContent = () => {
                     </TableHead>
                     <TableBody>
                         {productContracts.map((account, i) => (
-                            <TableRow key={i}>
+                            <TableRow
+                                key={i}
+                                style={{cursor: 'pointer'}}
+                                onClick={() => navigate(account.address)}
+                            >
                                 <TableCell>{account.type}</TableCell>
                                 <TableCell>
                                     <Typography
